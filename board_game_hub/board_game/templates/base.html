@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Board Game Hub{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+<div class="nav-panel">
+    <ul class="nav">
+        <li class="nav-button"><a href="{% url 'index' %}">Home</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">Games</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">Events</a></li>
+        {% if user.is_authenticated %}
+        <li class="nav-button"><a href="{% url 'index' %}">&#128100; {{ user.get_username }}</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">My Games</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">Log out</a></li>
+        {% else %}
+        <li class="nav-button">
+            <a href="{% url 'index' %}">Sign up</a>
+            <a href="{% url 'index' %}">Log in</a>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        {% if user.is_staff or user.is_superuser %}
+        <li class="nav-button"><a href="{% url 'index' %}">Admin</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">Sign up</a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+</header>
+<main>{%block content%}
+{%endblock content %}</main>
+<footer><p>&copy; 2023 </a></p></footer>
+</body>
+</html>

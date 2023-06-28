@@ -1,5 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from . models import Game
 
-def index(reqest):
-    return HttpResponse('We are still working...')
+def index(request):
+    num_games = Game.objects.all().count()
+    context = {
+    'num_games': num_games,
+    }
+
+    return render(request, 'board_game/index.html', context)
