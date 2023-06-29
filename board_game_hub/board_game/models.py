@@ -2,24 +2,25 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from datetime import date
 
 
 User = get_user_model()
 
 
-class Type(models.Model):
+class Category(models.Model):
     name = models.CharField(_('name'), max_length=100, db_index=True)
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('type')
-        verbose_name_plural = _('types')
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
 
     def __str__(self):
         return f'{self.name}'
     
     def get_absolute_url(self):
-        return reverse('type_detail', kwargs={'pk': self.pk})
+        return reverse('category_detail', kwargs={'pk': self.pk})
     
 
 class Publisher(models.Model):
@@ -39,10 +40,11 @@ class Publisher(models.Model):
 
 
 class Game(models.Model):
-    user = models.ForeignKey(User, verbose_name=_('user'), on_delete=models.CASCADE, related_name='games')
+    owner = models.ForeignKey(User, verbose_name=_('owner'), on_delete=models.CASCADE, related_name='games', null=True, blank=True)
     title = models.CharField(_('title'), max_length=100, db_index=True)
     publisher = models.ForeignKey(Publisher, verbose_name=_('publishers'), on_delete=models.CASCADE, related_name='games')
-    type = models.ManyToManyField(Type, verbose_name=_('type(s)'))
+    year = models.IntegerField(_("year"), null=True, blank=True, db_index=True)
+    category = models.ManyToManyField(Category, verbose_name=_('category(-ies)'))
     image = models.ImageField(_('image'), upload_to='board_game/game_images')
     player_count = models.CharField(_('player_count'), max_length=50)
     duration = models.CharField(_('duration'), max_length=50)
@@ -79,3 +81,36 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('game_detail', kwargs={'pk': self.pk})
     
+
+class GameBorrowRequest(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    borrower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='borrowers')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owners')
+    message = models.TextField()
+    is_accepted = models.BooleanField(default=False)
+
+    STATUS = (
+        ('Available', _('Available')),
+        ('Reserved', _('Reserved')),
+        ('Borrowed', _('Borrowed')),
+    )
+
+    status = models.CharField(_('status'), max_length=20, choices= STATUS, blank=True, default='Available')
+    due_back = models.DateField(_('due_back'), null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
+    
+    class Meta:
+        verbose_name = _('game borrow request')
+        verbose_name_plural = _('game borrow requests')
+
+    def __str__(self):
+        return f'{self.game} {self.borrower} {self.owner} {self.status}'
+    
+    def get_absolute_url(self):
+        return reverse('gameborrowrequest_detail', kwargs={'pk': self.pk})
+        

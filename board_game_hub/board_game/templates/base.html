@@ -16,7 +16,7 @@
         <li class="nav-button"><a href="{% url 'index' %}">Events</a></li>
         {% if user.is_authenticated %}
         <li class="nav-button"><a href="{% url 'profile' %}">&#128100; {{ user.get_username }}</a></li>
-        <li class="nav-button"><a href="{% url 'index' %}">My Games</a></li>
+        <li class="nav-button"><a href="{% url 'user_game_list' %}">My Games</a></li>
         <li class="nav-button"><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
         <li class="nav-button">
