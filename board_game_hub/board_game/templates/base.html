@@ -15,19 +15,19 @@
         <li class="nav-button"><a href="{% url 'index' %}">Games</a></li>
         <li class="nav-button"><a href="{% url 'index' %}">Events</a></li>
         {% if user.is_authenticated %}
-        <li class="nav-button"><a href="{% url 'index' %}">&#128100; {{ user.get_username }}</a></li>
+        <li class="nav-button"><a href="{% url 'profile' %}">&#128100; {{ user.get_username }}</a></li>
         <li class="nav-button"><a href="{% url 'index' %}">My Games</a></li>
-        <li class="nav-button"><a href="{% url 'index' %}">Log out</a></li>
+        <li class="nav-button"><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
         <li class="nav-button">
-            <a href="{% url 'index' %}">Sign up</a>
-            <a href="{% url 'index' %}">Log in</a>
+            <a href="{% url 'signup' %}">Sign up</a>
+            <a href="{% url 'login' %}">Log in</a>
         </li>
         {% endif %}
         {% if user.is_authenticated %}
         {% if user.is_staff or user.is_superuser %}
-        <li class="nav-button"><a href="{% url 'index' %}">Admin</a></li>
-        <li class="nav-button"><a href="{% url 'index' %}">Sign up</a></li>
+        <li class="nav-button"><a href="{% url 'admin:index' %}">Admin</a></li>
+        <li class="nav-button"><a href="{% url 'signup' %}">Sign up</a></li>
         {% endif %}
         {% endif %}
     </ul>
