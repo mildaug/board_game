@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} About game {% endblock title %}
+
+{% block content %}
+    <h1>About game</h1>
+    {% if game.image %}
+        <img class="game-photo" src="{{ game.image.url }}" alt="Game Photo">
+    {% else %}
+    <span>No Image Available</span>
+    {% endif %}
+    <p><strong>Owner:</strong> {{ game.user }}</p>
+    <p><strong>Title:</strong> {{ game.title }}</p>
+    <p><strong>Type:</strong> {% for game_type in game.type.all %}{{ game_type.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Publisher:</strong> {{ game.publisher }}</p>
+    <p><strong>Player count:</strong> {{ game.player_count }}</p>
+    <p><strong>Duration:</strong> {{ game.duration }}</p>
+    <p><strong>Player age:</strong> {{ game.player_age }}</p>
+{% endblock %}

@@ -74,7 +74,7 @@ class Game(models.Model):
         verbose_name_plural = _('games')
 
     def __str__(self):
-        return f'{self.title} {self.publisher} {self.type} {self.language} {self.difficulty}'
+        return f'{self.title}'
     
     def get_absolute_url(self):
         return reverse('game_detail', kwargs={'pk': self.pk})

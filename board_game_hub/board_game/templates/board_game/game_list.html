@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Games {% endblock title %}
+
+{% block content %}
+  <h1>Games</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Game</th>
+        <th>Publisher</th>
+        <th>Ranking</th>
+        <th>User</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in game_list %}
+        <tr>
+          <td>
+            {% if game.image %}
+              <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
+            {% endif %}
+          </td>
+          <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
+          <td>{{ game.publisher }}</td>
+          <td>{{ game.ranking }}</td>
+          <td>{{ game.user }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

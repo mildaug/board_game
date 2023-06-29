@@ -1,2 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
+{% block title %} Welcome to {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Board Game Hub</h1>
+<p>Welcome to Board Game paradise</p>
+<p>Some statistics:</p>
+<ul>
+    <li><strong>Here you can find that many games:</strong> {{ num_games }}</li>
+</ul>
+{% endblock content %}
