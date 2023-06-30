@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block title %} About game {% endblock title %}
 
 {% block content %}
@@ -6,7 +7,7 @@
     {% if game.image %}
         <img class="game-photo" src="{{ game.image.url }}" alt="Game Photo">
     {% else %}
-    <span>No Image Available</span>
+        <span>No Image Available</span>
     {% endif %}
     <p><strong>Owner:</strong> {{ game.user }}</p>
     <p><strong>Title:</strong> {{ game.title }}</p>
@@ -15,4 +16,28 @@
     <p><strong>Player count:</strong> {{ game.player_count }}</p>
     <p><strong>Duration:</strong> {{ game.duration }}</p>
     <p><strong>Player age:</strong> {{ game.player_age }}</p>
+
+    <h2>Average Rating: {{ average_rating }}</h2>
+  
+    <h2>User Ratings and Comments:</h2>
+    <ul>
+        {% for rating in ratings %}
+        <li>
+            <strong>User: {{ rating.user }}</strong>
+            <br>
+            Rating: {{ rating.rating }}
+            <br>
+            Comment: {{ rating.comment }}
+        </li>
+        {% empty %}
+            <li>No ratings or comments available.</li>
+        {% endfor %}
+    </ul>
+  
+    <h3>Submit Your Rating and Comment:</h3>
+    <form method="POST" action="{% url 'game_detail' game.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 {% endblock %}

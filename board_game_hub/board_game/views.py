@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.views.generic import ListView
-from .models import Game
-from .forms import GameBorrowForm
+from django.views.generic import ListView, DetailView
+from .models import Game, GameBorrowRequest, GameRating
+from .forms import GameBorrowForm, GameBorrowRequestStatusForm, GameRatingForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.db.models import Avg
 
 
 def index(request):
@@ -22,7 +24,23 @@ def game_list(request):
 
 def game_detail(request, pk):
     game = get_object_or_404(Game, pk=pk)
-    return render(request, 'board_game/game_detail.html', {'game': game})
+    ratings = GameRating.objects.filter(game=game)
+    average_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+    
+    if request.method == 'POST':
+        form = GameRatingForm(request.POST)
+        if form.is_valid():
+            rating = form.cleaned_data['rating']
+            comment = form.cleaned_data['comment']
+            game_rating = GameRating(game=game, user=request.user, rating=rating, comment=comment)
+            game_rating.save()
+            average_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+            game.rating = average_rating
+            game.save()
+    else:
+        form = GameRatingForm()
+
+    return render(request, 'board_game/game_detail.html', {'game': game, 'form': form, 'ratings': ratings, 'average_rating': average_rating})
 
 @login_required
 def borrow_game(request, game_id):
@@ -31,7 +49,13 @@ def borrow_game(request, game_id):
     if request.method == 'POST':
         form = GameBorrowForm(request.POST)
         if form.is_valid():
-            return render(request, 'board_game/success.html')
+            borrow_request = form.save(commit=False)
+            borrow_request.game = game
+            borrow_request.borrower = request.user
+            borrow_request.owner = game.owner
+            borrow_request.save()
+            messages.success(request, 'Borrow request submitted successfully.')
+            return redirect('game_detail', pk=game_id)
     else:
         form = GameBorrowForm()
 
@@ -45,4 +69,47 @@ class UserGameListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Game.objects.filter(owner=self.request.user)
+    
+
+class GameBorrowRequestListView(LoginRequiredMixin, ListView):
+    model = GameBorrowRequest
+    template_name = 'board_game/game_borrow_request_list.html'
+    context_object_name = 'game_borrow_requests'
+
+    def get_queryset(self):
+        return GameBorrowRequest.objects.filter(owner=self.request.user)
+    
+
+class GameBorrowRequestDetailView(DetailView):
+    model = GameBorrowRequest
+    template_name = 'board_game/game_borrow_request_detail.html'
+    context_object_name = 'game_borrow_request'
+
+def accept_game_borrow_request(request, pk):
+    game_borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
+
+    if request.method == 'POST':
+        form = GameBorrowRequestStatusForm(request.POST, instance=game_borrow_request)
+        if form.is_valid():
+            form.instance.is_accepted = True
+            form.save()
+            return redirect('game_borrow_request_detail', pk=pk)
+    else:
+        form = GameBorrowRequestStatusForm(instance=game_borrow_request)
+
+    return render(request, 'board_game/accept_game_borrow_request.html', {'form': form})
+
+def decline_game_borrow_request(request, pk):
+    game_borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
+
+    if request.method == 'POST':
+        form = GameBorrowRequestStatusForm(request.POST, instance=game_borrow_request)
+        if form.is_valid():
+            form.instance.is_accepted = False
+            form.save()
+            return redirect('game_borrow_request_detail', pk=pk)
+    else:
+        form = GameBorrowRequestStatusForm(instance=game_borrow_request)
+
+    return render(request, 'board_game/decline_game_borrow_request.html', {'form': form})
     

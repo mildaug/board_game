@@ -45,6 +45,7 @@ class Game(models.Model):
     publisher = models.ForeignKey(Publisher, verbose_name=_('publishers'), on_delete=models.CASCADE, related_name='games')
     year = models.IntegerField(_("year"), null=True, blank=True, db_index=True)
     category = models.ManyToManyField(Category, verbose_name=_('category(-ies)'))
+    rating = models.DecimalField(max_digits=3, decimal_places=1, null=True, blank=True)
     image = models.ImageField(_('image'), upload_to='board_game/game_images')
     player_count = models.CharField(_('player_count'), max_length=50)
     duration = models.CharField(_('duration'), max_length=50)
@@ -80,6 +81,24 @@ class Game(models.Model):
     
     def get_absolute_url(self):
         return reverse('game_detail', kwargs={'pk': self.pk})
+    
+
+class GameRating(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    comment = models.TextField()
+
+    class Meta:
+        ordering = ['rating']
+        verbose_name = _('game rating')
+        verbose_name_plural = _('game ratings')
+
+    def __str__(self):
+        return f'{self.game} {self.rating}'
+    
+    def get_absolute_url(self):
+        return reverse('gamerating_detail', kwargs={'pk': self.pk})
     
 
 class GameBorrowRequest(models.Model):

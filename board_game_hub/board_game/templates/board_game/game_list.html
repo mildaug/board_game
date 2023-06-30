@@ -2,33 +2,35 @@
 {% block title %} Games {% endblock title %}
 
 {% block content %}
-  <h1>Games</h1>
-  <table>
+    <h1>Games</h1>
+    <table>
     <thead>
-      <tr>
-        <th>Photo</th>
+        <tr>
+        <th>Image</th>
         <th>Game</th>
         <th>Publisher</th>
         <th>Ranking</th>
-        <th>User</th>
+        <th>Owner</th>
         <th>Action</th>
-      </tr>
+        <th>Status</th>
+        </tr>
     </thead>
     <tbody>
-      {% for game in game_list %}
+        {% for game in game_list %}
         <tr>
-          <td>
+            <td>
             {% if game.image %}
-              <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
+                <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
             {% endif %}
-          </td>
-          <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
-          <td>{{ game.publisher }}</td>
-          <td>{{ game.ranking }}</td>
-          <td>{{ game.user }}</td>
-          <td><a href="{% url 'borrow_game' game.id %}">Borrow</a></td>
+            </td>
+            <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
+            <td>{{ game.publisher }}</td>
+            <td>{{ game.rating }}</td>
+            <td>{{ game.owner }}</td>
+            <td><a href="{% url 'borrow_game' game.id %}">Borrow</a></td>
+            <td>{{ game.status }}</td>
         </tr>
-      {% endfor %}
+        {% endfor %}
     </tbody>
-  </table>
+    </table>
 {% endblock %}

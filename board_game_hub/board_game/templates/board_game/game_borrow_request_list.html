@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Game Borrow Requests</h1>
+  <ul>
+    {% for game_borrow_request in game_borrow_requests %}
+      <li>
+        <strong>Game:</strong> {{ game_borrow_request.game }}
+        <br>
+        <strong>Borrower:</strong> {{ game_borrow_request.borrower }}
+        <br>
+        <strong>Owner:</strong> {{ game_borrow_request.owner }}
+        <br>
+        <strong>Status:</strong> {{ game_borrow_request.status }}
+        <br>
+        <strong>Due Back:</strong> {{ game_borrow_request.due_back }}
+        <br>
+        <strong>Message:</strong> {{ game_borrow_request.message }}
+        <br>
+        {% if not game_borrow_request.is_accepted %}
+          <a href="{% url 'accept_game_borrow_request' game_borrow_request.pk %}">Accept</a>
+          <a href="{% url 'decline_game_borrow_request' game_borrow_request.pk %}">Decline</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No game borrow requests available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

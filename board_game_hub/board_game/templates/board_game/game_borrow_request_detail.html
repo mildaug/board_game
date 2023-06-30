@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Game Borrow Request Detail</h1>
+  <ul>
+    <li><strong>Game:</strong> {{ game_borrow_request.game }}</li>
+    <li><strong>Borrower:</strong> {{ game_borrow_request.borrower }}</li>
+    <li><strong>Owner:</strong> {{ game_borrow_request.owner }}</li>
+    <li><strong>Status:</strong> {{ game_borrow_request.status }}</li>
+    <li><strong>Due Back:</strong> {{ game_borrow_request.due_back }}</li>
+    <li><strong>Message:</strong> {{ game_borrow_request.message }}</li>
+    {% if not game_borrow_request.is_accepted %}
+      <li>
+        <form method="post" action="{% url 'accept_game_borrow_request' game_borrow_request.pk %}">
+          {% csrf_token %}
+          <button type="submit">Accept</button>
+        </form>
+        <form method="post" action="{% url 'decline_game_borrow_request' game_borrow_request.pk %}">
+          {% csrf_token %}
+          <button type="submit">Decline</button>
+        </form>
+      </li>
+    {% endif %}
+  </ul>
+{% endblock %}
