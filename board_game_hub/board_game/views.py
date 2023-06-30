@@ -17,7 +17,7 @@ def index(request):
     return render(request, 'board_game/index.html', context)
 
 def game_list(request):
-    paginator = Paginator(Game.objects.all(), 3)
+    paginator = Paginator(Game.objects.all(), 15)
     page_number = request.GET.get('page')
     game_list = paginator.get_page(page_number)
     return render(request, 'board_game/game_list.html', {'game_list': game_list})

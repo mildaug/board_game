@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} About game {% endblock title %}
 
@@ -9,7 +10,7 @@
     {% else %}
         <span>No Image Available</span>
     {% endif %}
-    <p><strong>Owner:</strong> {{ game.user }}</p>
+    <p><strong>Owner:</strong> {{ game.owner }}</p>
     <p><strong>Title:</strong> {{ game.title }}</p>
     <p><strong>Category(-ies):</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Publisher:</strong> {{ game.publisher }}</p>
