@@ -10,9 +10,9 @@ from django.db.models import Avg
 
 
 def index(request):
-    num_games = Game.objects.count()
+    games = Game.objects.order_by('-rating')[:3]  
     context = {
-        'num_games': num_games,
+        'games': games,
     }
     return render(request, 'board_game/index.html', context)
 
