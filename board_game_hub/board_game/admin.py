@@ -3,11 +3,11 @@ from . import models
 
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('title', 'publisher', 'language', 'difficulty')
+    list_display = ('title', 'publisher', 'language', 'difficulty', 'status')
 
 
 class GameBorrowRequestAdmin(admin.ModelAdmin):
-    list_display = ('game', 'borrower', 'owner', 'is_accepted', 'status')
+    list_display = ('game', 'borrower', 'owner', 'is_accepted')
 
 
 admin.site.register(models.Category)

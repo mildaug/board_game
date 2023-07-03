@@ -6,35 +6,35 @@
 {% block content %}
     <h1>Games</h1>
     <table>
-    <thead>
-        <tr>
-        <th>Image</th>
-        <th>Game</th>
-        <th>Publisher</th>
-        <th>Category</th>
-        <th>Ranking</th>
-        <th>Owner</th>
-        <th>Action</th>
-        <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for game in game_list %}
-        <tr>
-            <td>
-            {% if game.image %}
-                <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
-            {% endif %}
-            </td>
-            <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
-            <td>{{ game.publisher }}</td>
-            <td>{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
-            <td>{{ game.rating }}</td>
-            <td>{{ game.owner }}</td>
-            <td><a href="{% url 'borrow_game' game.id %}">Borrow</a></td>
-            <td>{{ game.status }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Game</th>
+                <th>Publisher</th>
+                <th>Category</th>
+                <th>Ranking</th>
+                <th>Owner</th>
+                <th>Action</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in game_list %}
+                <tr>
+                    <td>
+                        {% if game.image %}
+                            <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
+                        {% endif %}
+                    </td>
+                    <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
+                    <td><a href="{{ game.publisher.get_absolute_url }}">{{ game.publisher.name }}</a></td>
+                    <td>{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                    <td>{{ game.rating }}</td>
+                    <td>{{ game.owner }}</td>
+                    <td><a href="{% url 'borrow_game' game.id %}">Borrow</a></td>
+                    <td>{{ game.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

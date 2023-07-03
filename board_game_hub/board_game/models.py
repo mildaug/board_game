@@ -71,6 +71,13 @@ class Game(models.Model):
 
     difficulty = models.CharField(_('difficulty'), max_length=50, choices=DIFFICULTY_CHOICES, default='Medium', db_index=True)
 
+    STATUS = (
+        ('Available', _('Available')),
+        ('Borrowed', _('Borrowed')),
+    )
+
+    status = models.CharField(_('status'), max_length=20, choices= STATUS, blank=True, default='Available')
+
     class Meta:
         ordering = ['title']
         verbose_name = _('game')
@@ -107,15 +114,16 @@ class GameBorrowRequest(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owners')
     message = models.TextField()
     is_accepted = models.BooleanField(default=False)
+    due_back = models.DateField(_('due_back'), null=True, blank=True)
 
-    STATUS = (
-        ('Available', _('Available')),
-        ('Reserved', _('Reserved')),
-        ('Borrowed', _('Borrowed')),
+    PICK_UP_CHOICES = (
+        ('Physical Exchange', _('Physical exchange')),
+        ('Game Store', _('Game store')),
+        ('Post', _('Post')),
+        ('Pick-up Terminal', _('Pick-up terminal')),
     )
 
-    status = models.CharField(_('status'), max_length=20, choices= STATUS, blank=True, default='Available')
-    due_back = models.DateField(_('due_back'), null=True, blank=True)
+    pick_up_place = models.CharField(_('pick-up place'), max_length=20, choices=PICK_UP_CHOICES, null=True, blank=True)
 
     @property
     def is_overdue(self):

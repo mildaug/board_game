@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
-from .models import Game, GameBorrowRequest, GameRating
+from .models import Game, Publisher, GameBorrowRequest, GameRating
 from .forms import GameBorrowForm, GameBorrowRequestStatusForm, GameRatingForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -17,7 +17,8 @@ def index(request):
     return render(request, 'board_game/index.html', context)
 
 def game_list(request):
-    paginator = Paginator(Game.objects.all(), 15)
+    game_list = Game.objects.order_by('-rating')
+    paginator = Paginator(game_list, 15)
     page_number = request.GET.get('page')
     game_list = paginator.get_page(page_number)
     return render(request, 'board_game/game_list.html', {'game_list': game_list})
@@ -112,4 +113,10 @@ def decline_game_borrow_request(request, pk):
         form = GameBorrowRequestStatusForm(instance=game_borrow_request)
 
     return render(request, 'board_game/decline_game_borrow_request.html', {'form': form})
+
+
+class PublisherDetailView(DetailView):
+    model = Publisher
+    template_name = 'board_game/publisher_detail.html'
+    context_object_name = 'publisher'
     

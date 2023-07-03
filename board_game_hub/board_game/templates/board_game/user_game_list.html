@@ -7,8 +7,9 @@
 {% if game_list %}
     <ul class="game-list">
         {% for game in game_list %}
-            <class="game-item">
+            <li class="game-item">
                 <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
+            </li>
         {% endfor %}
     </ul>
 {% else %}
