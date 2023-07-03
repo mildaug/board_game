@@ -19,7 +19,7 @@
     <p><strong>Player age:</strong> {{ game.player_age }}</p>
 
     <h2>Average Rating: {{ average_rating }}</h2>
-  
+
     <h2>User Ratings and Comments:</h2>
     <ul>
         {% for rating in ratings %}
@@ -34,11 +34,15 @@
             <li>No ratings or comments available.</li>
         {% endfor %}
     </ul>
-  
-    <h3>Submit Your Rating and Comment:</h3>
-    <form method="POST" action="{% url 'game_detail' game.pk %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+
+    {% if not user_rated %}
+        <h3>Submit Your Rating and Comment:</h3>
+        <form method="POST" action="{% url 'game_detail' game.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% else %}
+        <p>You have already rated and left a review for this game.</p>
+    {% endif %}
 {% endblock %}

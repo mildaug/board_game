@@ -23,12 +23,14 @@ def game_list(request):
     game_list = paginator.get_page(page_number)
     return render(request, 'board_game/game_list.html', {'game_list': game_list})
 
+@login_required
 def game_detail(request, pk):
     game = get_object_or_404(Game, pk=pk)
     ratings = GameRating.objects.filter(game=game)
     average_rating = ratings.aggregate(Avg('rating'))['rating__avg']
-    
-    if request.method == 'POST':
+    user_rated = ratings.filter(user=request.user).exists()
+
+    if request.method == 'POST' and not user_rated:
         form = GameRatingForm(request.POST)
         if form.is_valid():
             rating = form.cleaned_data['rating']
@@ -38,10 +40,11 @@ def game_detail(request, pk):
             average_rating = ratings.aggregate(Avg('rating'))['rating__avg']
             game.rating = average_rating
             game.save()
+            user_rated = True
     else:
         form = GameRatingForm()
 
-    return render(request, 'board_game/game_detail.html', {'game': game, 'form': form, 'ratings': ratings, 'average_rating': average_rating})
+    return render(request, 'board_game/game_detail.html', {'game': game, 'form': form, 'ratings': ratings, 'average_rating': average_rating, 'user_rated': user_rated})
 
 @login_required
 def borrow_game(request, game_id):

@@ -108,6 +108,38 @@ class GameRating(models.Model):
         return reverse('gamerating_detail', kwargs={'pk': self.pk})
     
 
+class PartnerGameStore(models.Model):
+    name = models.CharField(_('name'), max_length=100)
+    city = models.CharField(_('city'), max_length=100)
+
+    class Meta:
+        ordering = ['city']
+        verbose_name = _('partner game store')
+        verbose_name_plural = _('partner game stores')
+
+    def __str__(self):
+        return f'{self.name} {self.city}'
+    
+    def get_absolute_url(self):
+        return reverse('partnergamestore_detail', kwargs={'pk': self.pk})    
+    
+
+class ParcelMachine(models.Model):
+    name = models.CharField(_('name'), max_length=100)
+    city = models.CharField(_('city'), max_length=100)
+
+    class Meta:
+        ordering = ['city']
+        verbose_name = _('parcel machine')
+        verbose_name_plural = _('parcel machines')
+
+    def __str__(self):
+        return f'{self.name} {self.city}'
+    
+    def get_absolute_url(self):
+        return reverse('parcelmachine_detail', kwargs={'pk': self.pk}) 
+    
+
 class GameBorrowRequest(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     borrower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='borrowers')
@@ -117,14 +149,16 @@ class GameBorrowRequest(models.Model):
     due_back = models.DateField(_('due_back'), null=True, blank=True)
 
     PICK_UP_CHOICES = (
-        ('Physical Exchange', _('Physical exchange')),
-        ('Game Store', _('Game store')),
-        ('Post', _('Post')),
-        ('Pick-up Terminal', _('Pick-up terminal')),
+        ('partner_game_store', _('Partner game store')),
+        ('send_via_post', _('Send via post')),
+        ('parcel_machine', _('Parcel machine')),
     )
 
     pick_up_place = models.CharField(_('pick-up place'), max_length=20, choices=PICK_UP_CHOICES, null=True, blank=True)
-
+    partner_game_store = models.ForeignKey(PartnerGameStore, on_delete=models.CASCADE, null=True, blank=True)
+    parcel_machine = models.ForeignKey(ParcelMachine, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.TextField(_('address'), null=True, blank=True)
+    
     @property
     def is_overdue(self):
         if self.due_back and date.today() > self.due_back:
@@ -140,4 +174,4 @@ class GameBorrowRequest(models.Model):
     
     def get_absolute_url(self):
         return reverse('gameborrowrequest_detail', kwargs={'pk': self.pk})
-        
+    
