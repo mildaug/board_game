@@ -2,11 +2,33 @@
 {% load static %}
 
 {% block title %} Welcome to {{ block.super }}{% endblock title %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock extra_css %}
+
 {% block content %}
-<h1>Board Game Hub</h1>
-<p>Welcome to Board Game paradise</p>
-<p>Some statistics:</p>
-<ul>
-    <li><strong>Here you can find that many games:</strong> {{ num_games }}</li>
-</ul>
+    <h1>Board Game Hub</h1>
+    <h2>Top 3 Games:</h2>
+    <ul>
+        {% for game in games %}
+        <li class="game-info">
+            <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+            <div>
+                <p class="game-details">
+                    <span class="game-name">{{ game.title }}</span>
+                    <span class="game-category">{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    <span class="game-ranking">Ranking: {{ game.rating }}</span>
+                </p>
+                <ul>
+                    {% for rating in game.gamerating_set.all %}
+                        <li>{{ rating.comment }}</li>
+                    {% empty %}
+                        <li>No comments available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock content %}
