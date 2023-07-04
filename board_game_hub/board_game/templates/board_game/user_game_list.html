@@ -9,10 +9,16 @@
         {% for game in game_list %}
             <li class="game-item">
                 <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
+                {% if game.owner == request.user %}
+                <a href="{% url 'update_game' game.pk %}">Update</a>
+                <a href="{% url 'delete_game' game.pk %}">Delete</a>
+            {% endif %}
             </li>
         {% endfor %}
     </ul>
 {% else %}
     <p class="box box-warning">No games found.</p>
 {% endif %}
+
+<a href="{% url 'create_game' %}">Add Game</a>
 {% endblock %}

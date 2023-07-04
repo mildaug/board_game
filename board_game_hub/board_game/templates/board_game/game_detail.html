@@ -4,7 +4,7 @@
 {% block title %} About game {% endblock title %}
 
 {% block content %}
-    <h1>About game</h1>
+    <h1>About game <a href="{% url 'game_borrow_request' game.id %}">Borrow</a></h1>
     {% if game.image %}
         <img class="game-photo" src="{{ game.image.url }}" alt="Game Photo">
     {% else %}
@@ -44,5 +44,29 @@
         </form>
     {% else %}
         <p>You have already rated and left a review for this game.</p>
+    {% endif %}
+
+    {% if game.video_url %}
+    <h2>Video:</h2>
+    <div id="player"></div>
+
+    <script src="https://www.youtube.com/player_api"></script>
+    <script>
+        function getYouTubeVideoId(url) {
+            var match = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_\-]+)/);
+            return match ? match[1] : null;
+        }
+
+        function onYouTubePlayerAPIReady() {
+            var videoId = getYouTubeVideoId('{{ game.video_url }}');
+            if (videoId) {
+                new YT.Player('player', {
+                    height: '360',
+                    width: '640',
+                    videoId: videoId
+                });
+            }
+        }
+    </script>
     {% endif %}
 {% endblock %}

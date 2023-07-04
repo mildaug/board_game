@@ -16,7 +16,7 @@
             <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
             <div>
                 <p class="game-details">
-                    <span class="game-name">{{ game.title }}</span>
+                    <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
                     <span class="game-category">{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                     <span class="game-ranking">Ranking: {{ game.rating }}</span>
                 </p>

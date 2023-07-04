@@ -13,12 +13,12 @@
     <ul class="nav">
         <li class="nav-button"><a href="{% url 'index' %}">Home</a></li>
         <li class="nav-button"><a href="{% url 'game_list' %}">Games</a></li>
-        <li class="nav-button"><a href="{% url 'index' %}">Events</a></li>
+        <li class="nav-button"><a href="{% url 'index' %}">Forum</a></li>
         {% if user.is_authenticated %}
         <li class="nav-button"><a href="{% url 'profile' %}">&#128100; {{ user.get_username }}</a></li>
         <li class="nav-button"><a href="{% url 'user_game_list' %}">My Games</a></li>
-        <li class="nav-button"><a href="{% url 'game_borrow_request_list' %}">Requests to borrow my games</a></li>
-        <li class="nav-button"><a href="{% url 'index' %}">Requests to borrow other games</a></li>
+        <li class="nav-button"><a href="{% url 'received_game_borrow_request_list' %}">Requests to borrow my games</a></li>
+        <li class="nav-button"><a href="{% url 'submited_game_borrow_request_list' %}">Requests to borrow other games</a></li>
         <li class="nav-button"><a href="{% url 'index' %}">Games I borrow</a></li>
         <li class="nav-button"><a href="{% url 'index' %}">Games I borrowed</a></li>
         <li class="nav-button"><a href="{% url 'logout' %}">Log out</a></li>

@@ -14,7 +14,6 @@
                 <th>Category</th>
                 <th>Ranking</th>
                 <th>Owner</th>
-                <th>Action</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -31,7 +30,6 @@
                     <td>{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                     <td>{{ game.rating }}</td>
                     <td>{{ game.owner }}</td>
-                    <td><a href="{% url 'borrow_game' game.id %}">Borrow</a></td>
                     <td>{{ game.status }}</td>
                 </tr>
             {% endfor %}
