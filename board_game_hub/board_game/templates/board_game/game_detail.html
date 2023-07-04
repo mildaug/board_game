@@ -10,13 +10,16 @@
     {% else %}
         <span>No Image Available</span>
     {% endif %}
-    <p><strong>Owner:</strong> {{ game.owner }}</p>
     <p><strong>Title:</strong> {{ game.title }}</p>
-    <p><strong>Category(-ies):</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Publisher:</strong> {{ game.publisher }}</p>
+    <p><strong>Year:</strong> {{ game.year }}</p>
+    <p><strong>Category(-ies):</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Difficulty:</strong> {{ game.difficulty }}</p>
     <p><strong>Player count:</strong> {{ game.player_count }}</p>
     <p><strong>Duration:</strong> {{ game.duration }}</p>
     <p><strong>Player age:</strong> {{ game.player_age }}</p>
+    <p><strong>Language:</strong> {{ game.language }}</p>
+    <p><strong>Owner:</strong> {{ game.owner }}</p>
 
     <h2>Average Rating: {{ average_rating }}</h2>
 
