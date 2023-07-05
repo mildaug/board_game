@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Borrow Request Declined</h1>
+    <p>The borrow request has been declined.</p>
+    <p>Game: {{ borrow_request.game }}</p>
+    <p>Borrower: {{ borrow_request.borrower }}</p>
+    <p>Due Back: {{ borrow_request.due_back }}</p>
+    <p>Message: {{ borrow_request.message }}</p>
+    <a href="{% url 'received_game_borrow_request_list' pk=borrow_request.pk %}">View Other Borrow Request</a>
+{% endblock %}

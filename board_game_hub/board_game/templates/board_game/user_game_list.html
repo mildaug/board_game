@@ -2,23 +2,28 @@
 {% load static %}
 
 {% block title %}My games{% endblock %}
+
 {% block content %}
-<h1>My Games</h1>
-{% if game_list %}
+  <h1>My Games</h1>
+  {% if game_list %}
     <ul class="game-list">
-        {% for game in game_list %}
-            <li class="game-item">
-                <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
-                {% if game.owner == request.user %}
+      {% for game in game_list %}
+        <class="game-item">
+          <div class="game-picture">
+            <img src="{{ game.image.url }}" alt="{{ game.name }}">
+            {% if game.owner == request.user %}
+              <div class="options">
+                <a href="{% url 'game_detail' game.pk %}">View</a>
                 <a href="{% url 'update_game' game.pk %}">Update</a>
                 <a href="{% url 'delete_game' game.pk %}">Delete</a>
+              </div>
             {% endif %}
-            </li>
-        {% endfor %}
+          </div>
+      {% endfor %}
     </ul>
-{% else %}
+  {% else %}
     <p class="box box-warning">No games found.</p>
-{% endif %}
+  {% endif %}
 
-<a href="{% url 'create_game' %}">Add Game</a>
+  <a href="{% url 'create_game' %}">Add Game</a>
 {% endblock %}

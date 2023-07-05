@@ -6,6 +6,10 @@ class GameAdmin(admin.ModelAdmin):
     list_display = ('title', 'publisher', 'language', 'difficulty', 'status')
 
 
+class GameRatingAdmin(admin.ModelAdmin):
+    list_display = ('game', 'rating')
+
+
 class GameBorrowRequestAdmin(admin.ModelAdmin):
     list_display = ('game', 'borrower', 'owner')
 
@@ -13,5 +17,5 @@ class GameBorrowRequestAdmin(admin.ModelAdmin):
 admin.site.register(models.Category)
 admin.site.register(models.Publisher)
 admin.site.register(models.Game, GameAdmin)
-admin.site.register(models.GameRating)
+admin.site.register(models.GameRating, GameRatingAdmin)
 admin.site.register(models.GameBorrowRequest, GameBorrowRequestAdmin)

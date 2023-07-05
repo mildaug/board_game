@@ -105,37 +105,52 @@ def received_game_borrow_list(request):
     borrow_requests = GameBorrowRequest.objects.filter(owner=request.user)
     return render(request, 'board_game/received_game_borrow_request_list.html', {'borrow_requests': borrow_requests})
 
+#not finished
 @login_required
 def accept_borrow_request(request, pk):
     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-    borrow_request.accepted = True
-    borrow_request.save()
-    return redirect('game_borrow_request_detail', pk=borrow_request.pk)
+    if request.user == borrow_request.owner:
+        borrow_request.accepted = True
+        borrow_request.game.status = 'Borrowed'
+        borrow_request.game.save()
+        borrow_request.save()
+    return redirect('games_others_borrowed')
 
+@login_required
+def games_others_borrowed_from_me(request):
+    borrowed_games = Game.objects.filter(owner=request.user, status='borrowed')
+    return render(request, 'board_game/games_others_borrowed.html', {'borrowed_games': borrowed_games})
+
+@login_required
+def games_i_borrowed_from_others(request):
+    borrowed_games = Game.objects.filter(gameborrowrequest__borrower=request.user, gameborrowrequest__accepted=True, gameborrowrequest__returned=False)
+    return render(request, 'board_game/games_i_borrowed.html', {'borrowed_games': borrowed_games})
+
+#not finished
 @login_required
 def reject_borrow_request(request, pk):
     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
     borrow_request.delete()
-    return redirect('game_borrow_request_list')
+    return redirect('board_games/games_others_borrowed.html')
 
-@login_required
-def extend_due_date(request, pk):
-    borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-    days = 7
-    if borrow_request.due_back:
-        new_due_back = borrow_request.due_back + timedelta(days=days)
-    else:
-        new_due_back = timezone.now().date() + timedelta(days=days)
-    borrow_request.due_back = new_due_back
-    borrow_request.save()
-    return redirect('game_borrow_request_detail', pk=borrow_request.pk)
+# @login_required
+# def extend_due_date(request, pk):
+#     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
+#     days = 7
+#     if borrow_request.due_back:
+#         new_due_back = borrow_request.due_back + timedelta(days=days)
+#     else:
+#         new_due_back = timezone.now().date() + timedelta(days=days)
+#     borrow_request.due_back = new_due_back
+#     borrow_request.save()
+#     return redirect('game_borrow_request_detail', pk=borrow_request.pk)
 
-@login_required
-def mark_as_returned(request, pk):
-    borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-    borrow_request.returned = True
-    borrow_request.save()
-    return redirect('game_borrow_request_detail', pk=borrow_request.pk)
+# @login_required
+# def mark_as_returned(request, pk):
+#     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
+#     borrow_request.returned = True
+#     borrow_request.save()
+#     return redirect('game_borrow_request_detail', pk=borrow_request.pk)
 
 
 class UserGameListView(LoginRequiredMixin, ListView):

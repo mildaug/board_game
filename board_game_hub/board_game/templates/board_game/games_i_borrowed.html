@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Games I Borrowed</h1>
+    {% if games_i_borrow %}
+        <ul class="game-list">
+            {% for game in games_i_borrow %}
+                <li class="game-item">
+                    <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="box box-warning">You have not borrowed any games.</p>
+    {% endif %}
+{% endblock %}
