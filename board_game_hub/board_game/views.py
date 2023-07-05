@@ -11,8 +11,9 @@ from django.utils import timezone
 
 
 def index(request):
-    games = Game.objects.order_by('-rating')[:3]  
-    return render(request, 'board_game/index.html', {'games': games})
+    top_three_games = Game.objects.order_by('-rating')[:3]
+    newest_games = Game.objects.order_by('-id')[:3]
+    return render(request, 'board_game/index.html', {'top_three_games': top_three_games, 'newest_games': newest_games})
 
 def game_list(request):
     game_list = Game.objects.order_by('-rating')

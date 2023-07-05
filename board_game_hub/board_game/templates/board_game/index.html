@@ -11,7 +11,7 @@
     <h1>Board Game Hub</h1>
     <h2>Top 3 Games:</h2>
     <ul>
-        {% for game in games %}
+        {% for game in top_three_games %}
         <li class="game-info">
             <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
             <div>
@@ -27,6 +27,22 @@
                         <li>No comments available.</li>
                     {% endfor %}
                 </ul>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Newest Games:</h2>
+    <ul>
+        {% for game in newest_games %}
+        <li class="game-info">
+            <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+            <div>
+                <p class="game-details">
+                    <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
+                    <span class="game-category">{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    <span class="game-ranking">Ranking: {{ game.rating }}</span>
+                </p>
             </div>
         </li>
         {% endfor %}
