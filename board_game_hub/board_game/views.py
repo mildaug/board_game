@@ -105,7 +105,6 @@ def received_game_borrow_list(request):
     borrow_requests = GameBorrowRequest.objects.filter(owner=request.user)
     return render(request, 'board_game/received_game_borrow_request_list.html', {'borrow_requests': borrow_requests})
 
-#not finished
 @login_required
 def accept_borrow_request(request, pk):
     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
@@ -118,7 +117,8 @@ def accept_borrow_request(request, pk):
 
 @login_required
 def games_others_borrowed_from_me(request):
-    borrowed_games = Game.objects.filter(owner=request.user, status='borrowed')
+    accepted_borrow_requests = GameBorrowRequest.objects.filter(owner=request.user, accepted=True)
+    borrowed_games = [borrow_request.game for borrow_request in accepted_borrow_requests if borrow_request.game.status == 'Borrowed']
     return render(request, 'board_game/games_others_borrowed.html', {'borrowed_games': borrowed_games})
 
 @login_required

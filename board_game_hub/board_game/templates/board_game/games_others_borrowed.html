@@ -3,9 +3,9 @@
 
 {% block content %}
     <h1>Games Others Borrowed</h1>
-    {% if games_others_borrow %}
+    {% if borrowed_games %}
         <ul class="game-list">
-            {% for game in games_others_borrow %}
+            {% for game in borrowed_games %}
                 <li class="game-item">
                     <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
                 </li>
