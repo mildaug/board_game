@@ -14,6 +14,7 @@ urlpatterns = [
     path('borrow-requests/<int:pk>/reject/', views.reject_borrow_request, name='reject_borrow_request'),
     path('games/i-borrow/', views.games_i_borrowed_from_others, name='games_i_borrowed'),
     path('games/others-borrow/', views.games_others_borrowed_from_me, name='games_others_borrowed'),
+    path('game/mark_returned/<int:game_id>/', views.mark_returned, name='mark_returned'),
     path('games/create/', views.create_game, name='create_game'),
     path('games/<int:pk>/update/', views.update_game, name='update_game'),
     path('games/<int:pk>/delete/', views.delete_game, name='delete_game'),

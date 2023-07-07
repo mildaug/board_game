@@ -16,6 +16,8 @@
                 <br>
                 <strong>Message:</strong> {{ borrow_request.message }}
                 <br>
+                <strong>Status:</strong> {{ borrow_request.request_status }}
+            <br>
                 <form action="{% url 'accept_borrow_request' borrow_request.pk %}" method="POST">
                     {% csrf_token %}
                     <input type="submit" value="Accept">
@@ -38,6 +40,9 @@
                 <strong>Due Back:</strong> {{ borrow_request.due_back }}
                 <br>
                 <strong>Message:</strong> {{ borrow_request.message }}
+                <br>
+                <strong>Status:</strong> {{ borrow_request.request_status }}
+            <br>
             </li>
         {% empty %}
             <li>No accepted requests.</li>
@@ -55,6 +60,8 @@
                 <strong>Due Back:</strong> {{ borrow_request.due_back }}
                 <br>
                 <strong>Message:</strong> {{ borrow_request.message }}
+                <br>
+                <strong>Status:</strong> {{ borrow_request.request_status }}
             </li>
         {% empty %}
             <li>No rejected requests.</li>

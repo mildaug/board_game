@@ -8,6 +8,10 @@
             {% for game in borrowed_games %}
                 <li class="game-item">
                     <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
+                    <form action="{% url 'mark_returned' game.pk %}" method="POST" class="return-form">
+                        {% csrf_token %}
+                        <input type="submit" value="Mark as Returned">
+                    </form>
                 </li>
             {% endfor %}
         </ul>

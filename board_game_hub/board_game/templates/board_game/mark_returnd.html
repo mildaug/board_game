@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Mark Game as Returned</h1>
+    <p>Are you sure you want to mark this game as returned?</p>
+    <form action="{% url 'mark_returned_confirm' game_id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Confirm">
+    </form>
+    <a href="{% url 'games_others_borrowed_from_me' %}">Cancel</a>
+{% endblock %}

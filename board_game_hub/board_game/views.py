@@ -6,8 +6,6 @@ from .models import Game, Publisher, GameBorrowRequest, GameRating
 from .forms import GameForm, GameRatingForm, BorrowRequestCreateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Avg
-from datetime import timedelta
-from django.utils import timezone
 
 
 def index(request):
@@ -42,7 +40,6 @@ def game_detail(request, pk):
             user_rated = True
     else:
         form = GameRatingForm()
-
     return render(request, 'board_game/game_detail.html', {'game': game, 'form': form, 'ratings': ratings, 'average_rating': average_rating, 'user_rated': user_rated, 'video_url': game.video_url})
 
 @login_required
@@ -93,7 +90,6 @@ def create_borrow_request(request, game_id):
             return redirect('submited_game_borrow_request_list')
     else:
         form = BorrowRequestCreateForm()
-    
     return render(request, 'board_game/game_borrow_request.html', {'form': form, 'game': game})
 
 @login_required
@@ -118,12 +114,7 @@ def received_game_borrow_list(request):
     accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')[:3]
     rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')[:3]
     new_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='New').order_by('-pk')
-
-    return render(request, 'board_game/received_game_borrow_request_list.html', {
-        'accepted_requests': accepted_requests,
-        'rejected_requests': rejected_requests,
-        'new_requests': new_requests
-    })
+    return render(request, 'board_game/received_game_borrow_request_list.html', {'accepted_requests': accepted_requests, 'rejected_requests': rejected_requests, 'new_requests': new_requests})
 
 @login_required
 def accept_borrow_request(request, pk):
@@ -156,24 +147,22 @@ def reject_borrow_request(request, pk):
         borrow_request.save()
     return redirect('received_game_borrow_request_list')
 
-# @login_required
-# def extend_due_date(request, pk):
-#     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-#     days = 7
-#     if borrow_request.due_back:
-#         new_due_back = borrow_request.due_back + timedelta(days=days)
-#     else:
-#         new_due_back = timezone.now().date() + timedelta(days=days)
-#     borrow_request.due_back = new_due_back
-#     borrow_request.save()
-#     return redirect('game_borrow_request_detail', pk=borrow_request.pk)
+@login_required
+def mark_returned_confirm(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
+    return render(request, 'board_game/mark_returned.html', {'game': game})
 
-# @login_required
-# def mark_as_returned(request, pk):
-#     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-#     borrow_request.returned = True
-#     borrow_request.save()
-#     return redirect('game_borrow_request_detail', pk=borrow_request.pk)
+@login_required
+def mark_returned(request, game_id):
+    borrow_request = get_object_or_404(GameBorrowRequest, game_id=game_id)
+    borrow_request.returned = True
+    borrow_request.save()
+    game = borrow_request.game
+    game.status = 'Available'
+    game.save()
+    borrowed_games = Game.objects.filter(gameborrowrequest__game=game, gameborrowrequest__request_status='Accepted')
+    borrowed_games.update(status='Available')
+    return redirect('games_others_borrowed')
 
 
 class UserGameListView(LoginRequiredMixin, ListView):
