@@ -99,22 +99,12 @@ def submited_game_borrow_list(request):
 
 @login_required
 def received_game_borrow_list(request):
-    if request.method == 'POST':
-        request_id = request.POST.get('request_id')
-        action = request.POST.get('action')
-
-        borrow_request = get_object_or_404(GameBorrowRequest, id=request_id, owner=request.user)
-        if action == 'accept':
-            borrow_request.request_status = 'Accepted'
-            borrow_request.save()
-        elif action == 'reject':
-            borrow_request.request_status = 'Rejected'
-            borrow_request.save()
-
+    new_requests_count = GameBorrowRequest.objects.filter(request_status='New').count()
+    new_requests = GameBorrowRequest.objects.filter(request_status='New')
     accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')[:3]
     rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')[:3]
-    new_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='New').order_by('-pk')
-    return render(request, 'board_game/received_game_borrow_request_list.html', {'accepted_requests': accepted_requests, 'rejected_requests': rejected_requests, 'new_requests': new_requests})
+    context = {'new_requests_count': new_requests_count, 'new_requests': new_requests, 'accepted_requests': accepted_requests, 'rejected_requests': rejected_requests}
+    return render(request, 'board_game/received_game_borrow_request_list.html', context)
 
 @login_required
 def accept_borrow_request(request, pk):
