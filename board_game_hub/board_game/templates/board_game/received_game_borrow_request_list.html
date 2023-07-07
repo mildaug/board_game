@@ -2,28 +2,62 @@
 {% load static %}
 
 {% block content %}
-      <h1>Received Borrow Requests</h1>
-      <ul>
-        {% for borrow_request in borrow_requests %} 
-          {% if borrow_request.owner == request.user %}
+    <h1>Received Borrow Requests</h1>
+
+    <h2>New Requests</h2>
+    <ul>
+        {% for borrow_request in new_requests %}
             <li>
-              <strong>Game:</strong> {{ borrow_request.game }}
-              <br>
-              <strong>Borrower:</strong> {{ borrow_request.borrower }}
-              <br>
-              <strong>Due Back:</strong> {{ borrow_request.due_back }}
-              <br>
-              <strong>Message:</strong> {{ borrow_request.message }}
-              <br>
-              <form action="{% url 'accept_borrow_request' borrow_request.pk %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Accept">
-              </form>
-              <a href="{% url 'reject_borrow_request' borrow_request.pk %}">Decline</a>
+                <strong>Game:</strong> {{ borrow_request.game }}
+                <br>
+                <strong>Borrower:</strong> {{ borrow_request.borrower }}
+                <br>
+                <strong>Due Back:</strong> {{ borrow_request.due_back }}
+                <br>
+                <strong>Message:</strong> {{ borrow_request.message }}
+                <br>
+                <form action="{% url 'accept_borrow_request' borrow_request.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Accept">
+                </form>
+                <a href="{% url 'reject_borrow_request' borrow_request.pk %}">Decline</a>
             </li>
-          {% endif %}
         {% empty %}
-          <li>No received borrow requests.</li>
+            <li>No new requests.</li>
         {% endfor %}
-      </ul>
+    </ul>
+    
+    <h2>Accepted Requests</h2>
+    <ul>
+        {% for borrow_request in accepted_requests %}
+            <li>
+                <strong>Game:</strong> {{ borrow_request.game }}
+                <br>
+                <strong>Borrower:</strong> {{ borrow_request.borrower }}
+                <br>
+                <strong>Due Back:</strong> {{ borrow_request.due_back }}
+                <br>
+                <strong>Message:</strong> {{ borrow_request.message }}
+            </li>
+        {% empty %}
+            <li>No accepted requests.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Rejected Requests</h2>
+    <ul>
+        {% for borrow_request in rejected_requests %}
+            <li>
+                <strong>Game:</strong> {{ borrow_request.game }}
+                <br>
+                <strong>Borrower:</strong> {{ borrow_request.borrower }}
+                <br>
+                <strong>Due Back:</strong> {{ borrow_request.due_back }}
+                <br>
+                <strong>Message:</strong> {{ borrow_request.message }}
+            </li>
+        {% empty %}
+            <li>No rejected requests.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

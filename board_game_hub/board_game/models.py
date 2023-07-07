@@ -115,22 +115,29 @@ class GameBorrowRequest(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owners')
     message = models.TextField()
     due_back = models.DateField(_('due_back'), null=True, blank=True)
-    accepted = models.BooleanField(_('accepted'), default=False)
+
+    REQUEST_STATUS_CHOICES = (
+        ('New', _('New')),
+        ('Accepted', _('Accepted')),
+        ('Rejected', _('Rejected')),
+    )
+
+    request_status = models.CharField(_('request_status'), max_length=10, choices=REQUEST_STATUS_CHOICES, default='New', db_index=True)
     returned = models.BooleanField(_('returned'), default=False)
-    
+
     @property
     def is_overdue(self):
         if self.due_back and date.today() > self.due_back:
             return True
         return False
-    
+
     class Meta:
         verbose_name = _('game borrow request')
         verbose_name_plural = _('game borrow requests')
 
     def __str__(self):
         return f'{self.game} {self.borrower} {self.owner}'
-    
+
     def get_absolute_url(self):
         return reverse('gameborrowrequest_detail', kwargs={'pk': self.pk})
     

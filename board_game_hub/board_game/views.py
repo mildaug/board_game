@@ -103,36 +103,58 @@ def submited_game_borrow_list(request):
 
 @login_required
 def received_game_borrow_list(request):
-    borrow_requests = GameBorrowRequest.objects.filter(owner=request.user)
-    return render(request, 'board_game/received_game_borrow_request_list.html', {'borrow_requests': borrow_requests})
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        action = request.POST.get('action')
+
+        borrow_request = get_object_or_404(GameBorrowRequest, id=request_id, owner=request.user)
+        if action == 'accept':
+            borrow_request.request_status = 'Accepted'
+            borrow_request.save()
+        elif action == 'reject':
+            borrow_request.request_status = 'Rejected'
+            borrow_request.save()
+
+    accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')[:3]
+    rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')[:3]
+    new_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='New').order_by('-pk')
+
+    return render(request, 'board_game/received_game_borrow_request_list.html', {
+        'accepted_requests': accepted_requests,
+        'rejected_requests': rejected_requests,
+        'new_requests': new_requests
+    })
 
 @login_required
 def accept_borrow_request(request, pk):
     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
     if request.user == borrow_request.owner:
-        borrow_request.accepted = True
+        borrow_request.request_status = 'Accepted'
         borrow_request.game.status = 'Borrowed'
         borrow_request.game.save()
         borrow_request.save()
-    return redirect('games_others_borrowed')
+    return redirect('received_game_borrow_request_list')
 
 @login_required
 def games_others_borrowed_from_me(request):
-    accepted_borrow_requests = GameBorrowRequest.objects.filter(owner=request.user, accepted=True)
+    accepted_borrow_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted')
     borrowed_games = [borrow_request.game for borrow_request in accepted_borrow_requests if borrow_request.game.status == 'Borrowed']
     return render(request, 'board_game/games_others_borrowed.html', {'borrowed_games': borrowed_games})
 
 @login_required
 def games_i_borrowed_from_others(request):
-    borrowed_games = Game.objects.filter(gameborrowrequest__borrower=request.user, gameborrowrequest__accepted=True, gameborrowrequest__returned=False)
+    borrowed_games = Game.objects.filter(gameborrowrequest__borrower=request.user, gameborrowrequest__request_status='Accepted', gameborrowrequest__returned=False)
     return render(request, 'board_game/games_i_borrowed.html', {'borrowed_games': borrowed_games})
 
-#not finished
 @login_required
 def reject_borrow_request(request, pk):
     borrow_request = get_object_or_404(GameBorrowRequest, pk=pk)
-    borrow_request.delete()
-    return redirect('board_games/games_others_borrowed.html')
+    if request.user == borrow_request.owner:
+        borrow_request.request_status = 'Rejected' 
+        borrow_request.game.status = 'Available'
+        borrow_request.game.save()
+        borrow_request.save()
+    return redirect('received_game_borrow_request_list')
 
 # @login_required
 # def extend_due_date(request, pk):
