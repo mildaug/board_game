@@ -1,5 +1,5 @@
 from django import forms
-from .models import Publisher, Category, Game, GameBorrowRequest
+from .models import Publisher, Category, Game, GameBorrowRequest, Discussion, Comment
 
 
 class DateInput(forms.DateInput):
@@ -82,4 +82,22 @@ class GameForm(forms.ModelForm):
             cleaned_data['category'] = [category]
 
         return cleaned_data
+        
+
+class DiscussionForm(forms.ModelForm):
+    class Meta:
+        model = Discussion
+        fields = ['title', 'content']
+        labels = {
+            'title': 'Discussion Title',
+            'content': 'Discussion Content',
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {
+            'content': 'Comment',
+        }
         

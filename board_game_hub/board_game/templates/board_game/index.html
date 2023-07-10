@@ -8,43 +8,56 @@
 {% endblock extra_css %}
 
 {% block content %}
-    <h1>Board Game Hub</h1>
-    <h2>Top 3 Games:</h2>
-    <ul>
-        {% for game in top_three_games %}
-        <li class="game-info">
-            <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
-            <div>
-                <p class="game-details">
-                    <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
-                    <span class="game-category">{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                    <span class="game-ranking">Ranking: {{ game.rating }}</span>
-                </p>
-                <ul>
-                    {% for rating in game.gamerating_set.all %}
-                        <li>{{ rating.comment }}</li>
-                    {% empty %}
-                        <li>No comments available.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+        <h1 class="index-title">Board Game Hub</h1>
+        <h2 class="section-title">Top 3 Games:</h2>
+        <ul class="game-list">
+            {% for game in top_three_games %}
+            <li class="game-info">
+                <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+                <div class="game-details">
+                    <p class="game-title">
+                        <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
+                    </p>
+                    <ul class="game-meta">
+                        <li class="game-meta-item">
+                            <strong>Category:</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                        </li>
+                        <li class="game-meta-item">
+                            <strong>Ranking:</strong> {{ game.rating }}
+                        </li>
+                    </ul>
+                    <ul class="game-ratings">
+                        {% for rating in game.gamerating_set.all %}
+                            <li>{{ rating.comment }}</li>
+                        {% empty %}
+                            <li>No comments available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
 
-    <h2>Newest Games:</h2>
-    <ul>
-        {% for game in newest_games %}
-        <li class="game-info">
-            <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
-            <div>
-                <p class="game-details">
-                    <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
-                    <span class="game-category">{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                    <span class="game-ranking">Ranking: {{ game.rating }}</span>
-                </p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+        <h2 class="section-title">Newest Games:</h2>
+        <ul class="game-list">
+            {% for game in newest_games %}
+            <li class="game-info">
+                <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+                <div class="game-details">
+                    <p class="game-title">
+                        <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
+                    </p>
+                    <ul class="game-meta">
+                        <li class="game-meta-item">
+                            <strong>Category:</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                        </li>
+                        <li class="game-meta-item">
+                            <strong>Ranking:</strong> {{ game.rating }}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock content %}

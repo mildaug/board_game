@@ -2,14 +2,13 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset = "UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}Board Game Hub{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-<header>
-<div class="nav-panel">
+<header class="nav-panel">
     <ul class="nav">
         <li class="nav-button"><a href="{% url 'index' %}">Home</a></li>
         <li class="nav-button"><a href="{% url 'game_list' %}">Games</a></li>
@@ -20,7 +19,7 @@
         <li class="nav-button">
             <a href="{% url 'received_game_borrow_request_list' %}">
                 Requests to borrow my games
-                {% if new_requests_count > 0 %}
+                {% if request.user == game_owner and new_requests_count > 0 %}
                     <span class="notification-circle">{{ new_requests_count }}</span>
                 {% endif %}
             </a>

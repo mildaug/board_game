@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
-from .models import Game, Publisher, GameBorrowRequest, GameRating
-from .forms import GameForm, GameRatingForm, BorrowRequestCreateForm
+from .models import Game, Publisher, GameBorrowRequest, GameRating, Discussion, Comment
+from .forms import GameForm, GameRatingForm, BorrowRequestCreateForm, DiscussionForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Avg
 
@@ -15,10 +15,10 @@ def index(request):
 
 def game_list(request):
     game_list = Game.objects.order_by('-rating')
-    paginator = Paginator(game_list, 15)
+    paginator = Paginator(game_list, 6)
     page_number = request.GET.get('page')
     game_list = paginator.get_page(page_number)
-    return render(request, 'board_game/game_list.html', {'game_list': game_list})
+    return render(request, 'board_game/game_list.html', {'game_list': game_list, 'page_obj': game_list})
 
 @login_required
 def game_detail(request, pk):
@@ -99,11 +99,17 @@ def submited_game_borrow_list(request):
 
 @login_required
 def received_game_borrow_list(request):
-    new_requests_count = GameBorrowRequest.objects.filter(request_status='New').count()
-    new_requests = GameBorrowRequest.objects.filter(request_status='New')
+    new_requests_count = GameBorrowRequest.objects.filter(request_status='New', owner=request.user).count()
+    new_requests = GameBorrowRequest.objects.filter(request_status='New', owner=request.user)
     accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')[:3]
     rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')[:3]
-    context = {'new_requests_count': new_requests_count, 'new_requests': new_requests, 'accepted_requests': accepted_requests, 'rejected_requests': rejected_requests}
+    context = {
+        'new_requests_count': new_requests_count,
+        'new_requests': new_requests,
+        'accepted_requests': accepted_requests,
+        'rejected_requests': rejected_requests,
+        'game_owner': request.user
+    }
     return render(request, 'board_game/received_game_borrow_request_list.html', context)
 
 @login_required
@@ -168,3 +174,39 @@ class PublisherDetailView(DetailView):
     model = Publisher
     template_name = 'board_game/publisher_detail.html'
     context_object_name = 'publisher'
+
+
+def discussion_list(request):
+    discussions = Discussion.objects.all()
+    return render(request, 'discussion/list.html', {'discussions': discussions})
+
+def discussion_detail(request, discussion_id):
+    discussion = get_object_or_404(Discussion, pk=discussion_id)
+    comments = Comment.objects.filter(discussion=discussion)
+    return render(request, 'discussion/detail.html', {'discussion': discussion, 'comments': comments})
+
+def create_discussion(request):
+    if request.method == 'POST':
+        form = DiscussionForm(request.POST)
+        if form.is_valid():
+            discussion = form.save(commit=False)
+            discussion.author = request.user
+            discussion.save()
+            return redirect('discussion_list')
+    else:
+        form = DiscussionForm()
+    return render(request, 'discussion/create.html', {'form': form})
+
+def create_comment(request, discussion_id):
+    discussion = get_object_or_404(Discussion, pk=discussion_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.discussion = discussion
+            comment.author = request.user
+            comment.save()
+            return redirect('discussion_detail', discussion_id=discussion_id)
+    else:
+        form = CommentForm()
+    return render(request, 'discussion/create_comment.html', {'form': form, 'discussion': discussion})

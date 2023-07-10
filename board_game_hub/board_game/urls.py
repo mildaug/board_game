@@ -18,4 +18,8 @@ urlpatterns = [
     path('games/create/', views.create_game, name='create_game'),
     path('games/<int:pk>/update/', views.update_game, name='update_game'),
     path('games/<int:pk>/delete/', views.delete_game, name='delete_game'),
+    path('discussions/', views.discussion_list, name='discussion_list'),
+    path('discussions/<int:discussion_id>/', views.discussion_detail, name='discussion_detail'),
+    path('discussions/create/', views.create_discussion, name='create_discussion'),
+    path('discussions/<int:discussion_id>/comment/', views.create_comment, name='create_comment'),
 ]

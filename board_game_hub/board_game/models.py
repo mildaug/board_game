@@ -141,3 +141,37 @@ class GameBorrowRequest(models.Model):
     def get_absolute_url(self):
         return reverse('gameborrowrequest_detail', kwargs={'pk': self.pk})
     
+
+class Discussion(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('discussion')
+        verbose_name_plural = _('discussions')
+
+    def __str__(self):
+        return f'{self.title} {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('discussion_detail', kwargs={'pk': self.pk})
+
+
+class Comment(models.Model):
+    discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
+
+    def __str__(self):
+        return f'{self.discussion} {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('comment_detail', kwargs={'pk': self.pk})
+    
