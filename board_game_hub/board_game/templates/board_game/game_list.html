@@ -1,38 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Games{% endblock title %}
-
 {% block content %}
-    <h1>Games</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Game</th>
-                <th>Publisher</th>
-                <th>Category</th>
-                <th>Ranking</th>
-                <th>Owner</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in game_list %}
-                <tr>
-                    <td>
-                        {% if game.image %}
-                            <img class="game-image" src="{{ game.image.url }}" alt="{{ game.title }}">
-                        {% endif %}
-                    </td>
-                    <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
-                    <td><a href="{{ game.publisher.get_absolute_url }}">{{ game.publisher.name }}</a></td>
-                    <td>{% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
-                    <td>{{ game.rating }}</td>
-                    <td>{{ game.owner }}</td>
-                    <td>{{ game.status }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h1>All games</h1>
+    {% include 'includes/paginator_pages.html' %}
+    <div class="game-list">
+        {% for game in game_list %}
+            {% with game_image=game.image.url %}
+                <div class="game">
+                    <div class="game-details">
+                        <h3 class="game-title"><a href="{% url 'game_detail' game.pk %}">{{ game.title }}, {{ game.year }}</a></h3>
+                        <div class="game-image">
+                            {% if game_image %}
+                                <img src="{{ game_image }}" alt="{{ game.title }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+    {% include 'includes/paginator_pages.html' %}
 {% endblock %}
