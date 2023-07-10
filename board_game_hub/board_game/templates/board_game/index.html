@@ -13,7 +13,7 @@
         <ul class="game-list">
             {% for game in top_three_games %}
             <li class="game-info">
-                <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+                <img class="game-photo-index" src="{{ game.image.url }}" alt="{{ game.title }}">
                 <div class="game-details">
                     <p class="game-title">
                         <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>
@@ -42,7 +42,7 @@
         <ul class="game-list">
             {% for game in newest_games %}
             <li class="game-info">
-                <img class="game-photo" src="{{ game.image.url }}" alt="{{ game.title }}">
+                <img class="game-photo-index" src="{{ game.image.url }}" alt="{{ game.title }}">
                 <div class="game-details">
                     <p class="game-title">
                         <a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a>

@@ -41,11 +41,11 @@ class BorrowRequestReturnForm(forms.ModelForm):
 
 class GameRatingForm(forms.Form):
     RATING_CHOICES = [
-        (1, '1 star'),
-        (2, '2 stars'),
-        (3, '3 stars'),
-        (4, '4 stars'),
-        (5, '5 stars'),
+        (1, '★'),
+        (2, '★★'),
+        (3, '★★★'),
+        (4, '★★★★'),
+        (5, '★★★★★'),
     ]
     
     rating = forms.ChoiceField(choices=RATING_CHOICES, widget=forms.RadioSelect)

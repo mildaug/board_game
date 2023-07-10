@@ -1,13 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Borrow Game{% endblock %}
+{% block title %}Borrow Game{% endblock title %}
 
 {% block content %}
-    <h1>Borrow Game: {{ game.title }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div id="contact">
+        <h1 class="section-header">BORROW GAME</h1>
+        <h1 class="section-header">{{ game.title }}</h1>
+        <div class="contact-wrapper">
+            <div class="form-horizontal">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" rows="6" placeholder="Message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="send-button">Send message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
