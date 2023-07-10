@@ -1,0 +1,21 @@
+<ul class="paginator">
+  {% for number in page_obj.paginator.page_range %}
+    {% if number <= 3 %}
+      <li>
+        {% if page_obj.number != number %}
+          <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ number }}" class="bubble">{{ number }}</a>
+        {% else %}
+          <span class="current">{{ number }}</span>
+        {% endif %}
+      </li>
+    {% elif number == 4 %}
+      <li>
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ page_obj.number|add:"1" }}" class="arrow">&#8594;</a>
+      </li>
+    {% elif number == page_obj.paginator.num_pages %}
+      <li>
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ number }}" class="bubble double-arrow">&#8649;</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
