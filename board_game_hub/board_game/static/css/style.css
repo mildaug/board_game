@@ -18,6 +18,7 @@ body {
 .nav-button {
   margin-left: 10px;
   font-family: Arial Black, sans-serif;
+  font-size: 15px;
   color: white;
 }
 
@@ -152,14 +153,14 @@ h3 {
   font-family: Arial Black, sans-serif;
   color: white;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .game-title a {
   text-decoration: none;
   color: white;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .game-image {
@@ -357,8 +358,10 @@ textarea {
   width: 600px;
   height: 75px;
   background-color: #352f44;
-  color: #fff;
+  color: white;
   margin: 0 auto;
+  font-size: 15px;
+  font-family: Arial Black, sans-serif;
 }
 
 .send-button {
@@ -399,7 +402,7 @@ textarea {
 .section-title {
   text-align: center;
   font-family: Arial Black, sans-serif;
-  font-size: 35px;
+  font-size: 25px;
   color: white;
   margin-top: 50px;
   margin-bottom: 20px;
@@ -417,8 +420,8 @@ textarea {
 }
 
 .game-photo-index {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
 }
 
 .game-info-container {
@@ -446,13 +449,13 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px;
+  padding: 20px;
   background-color: #5dacbd;
   color: #fff;
   font-family: Arial Black, sans-serif;
   text-decoration: none;
   border-radius: 50%; 
-  font-size: 20px;
+  font-size: 15px;
   width: 60px; 
   height: 60px; 
   margin-bottom: 50px;
@@ -499,5 +502,63 @@ textarea {
 }
 
 .user-info-box p a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
+
+.add-game-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: #5dacbd;
+  color: #fff;
+  font-family: Arial Black, sans-serif;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto; 
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  margin-left: 100px;
+}
+
+.game-item {
+  flex: 0 0 calc(33.33% - 20px);
+  margin-bottom: 150px;
+}
+
+.game-picture {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+.game-picture img {
+  width: 400px;
+  height: 400px;
+}
+
+.options {
+  justify-content: center;
+}
+
+.options a {
+  color: white;
+  text-decoration: none;
+  font-size: 70px;
+  font-family: Arial Black, sans-serif;
+}
+
+

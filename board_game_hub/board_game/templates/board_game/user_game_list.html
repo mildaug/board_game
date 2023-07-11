@@ -4,26 +4,28 @@
 {% block title %}My games{% endblock %}
 
 {% block content %}
-  <h1>My Games</h1>
-  {% if game_list %}
-    <ul class="game-list">
-      {% for game in game_list %}
-        <class="game-item">
-          <div class="game-picture">
-            <img src="{{ game.image.url }}" alt="{{ game.name }}">
-            {% if game.owner == request.user %}
-              <div class="options">
-                <a href="{% url 'game_detail' game.pk %}">View</a>
-                <a href="{% url 'update_game' game.pk %}">Update</a>
-                <a href="{% url 'delete_game' game.pk %}">Delete</a>
-              </div>
-            {% endif %}
-          </div>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p class="box box-warning">No games found.</p>
-  {% endif %}
+    <h1>My Games</h1>
+    
+    <a href="{% url 'create_game' %}" class="add-game-link">Add game</a>
 
-  <a href="{% url 'create_game' %}">Add Game</a>
+    {% if game_list %}
+        <div class="game-list">
+        {% for game in game_list %}
+            <div class="game-item">
+            <div class="game-picture">
+                <img src="{{ game.image.url }}" alt="{{ game.name }}">
+                {% if game.owner == request.user %}
+                <div class="options">
+                    <a href="{% url 'game_detail' game.pk %}">View</a>
+                    <a href="{% url 'update_game' game.pk %}">Edit</a>
+                    <a href="{% url 'delete_game' game.pk %}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p class="box box-warning">No games found.</p>
+    {% endif %}
 {% endblock %}
