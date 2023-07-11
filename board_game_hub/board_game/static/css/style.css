@@ -106,6 +106,14 @@ h2 {
   margin-bottom: 20px;
 }
 
+h3 {
+  text-align: left;
+  font-family: Arial Black, sans-serif;
+  color: #5dacbd;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .game-list {
   display: flex;
   flex-wrap: wrap;

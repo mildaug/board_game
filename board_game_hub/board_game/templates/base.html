@@ -19,10 +19,11 @@
         <li class="nav-button">
             <a href="{% url 'received_game_borrow_request_list' %}">
                 Requests to borrow my games
-                {% if request.user == game_owner and new_requests_count > 0 %}
+                {% if new_requests_count > 0 %}
                     <span class="notification-circle">{{ new_requests_count }}</span>
                 {% endif %}
             </a>
+        </li>
         <li class="nav-button"><a href="{% url 'submited_game_borrow_request_list' %}">My requests to borrow other's games</a></li>
         <li class="nav-button"><a href="{% url 'games_i_borrowed' %}">Games I borrowed from others</a></li> 
         <li class="nav-button"><a href="{% url 'games_others_borrowed' %}">Games others borrowed from me</a></li>
@@ -36,7 +37,6 @@
         {% if user.is_authenticated %}
         {% if user.is_staff or user.is_superuser %}
         <li class="nav-button"><a href="{% url 'admin:index' %}">Admin</a></li>
-        <li class="nav-button"><a href="{% url 'signup' %}">Sign up</a></li>
         {% endif %}
         {% endif %}
     </ul>
