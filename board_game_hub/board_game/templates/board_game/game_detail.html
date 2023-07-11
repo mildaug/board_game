@@ -30,17 +30,17 @@
                 <p><strong>Owner:</strong> {{ game.owner }}</p>
             </div>
             <div class="rating-container">
-                <h2>Average rating: {{ average_rating }}</h2>
+                <h2>Average rating: {{ game.rating }}/5.0</h2>
 
                 <h2>User ratings and comments:</h2>
                 <ul>
                     {% for rating in ratings %}
                     <li>
-                        <strong>User: {{ rating.user }}</strong>
+                        <strong>User:</strong> {{ rating.user }}
                         <br>
-                        Rating: {{ rating.rating }}
+                        <strong>Rating:</strong> {{ rating.rating }}
                         <br>
-                        Comment: {{ rating.comment }}
+                        <strong>Comment:</strong> {{ rating.comment }}
                     </li>
                     {% empty %}
                     <li>No ratings or comments available.</li>

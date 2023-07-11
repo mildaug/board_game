@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}{{ user_ }} profile {{ block.super }}{% endblock title %}
+{% block title %}{{ user_.username }} profile {{ block.super }}{% endblock title %}
 {% block content %}
-<h1>{{ user_ }}</h1>
-{% if user_.profile and user_.profile.picture %}
-<img class="user-profile-picture" src="{{ user_.profile.picture.url }}">
-{% endif %}
-{% if user_.first_name or user_.last_name %}
-    <p>{{ user_.first_name }} {{ user_.last_name }}</p>
-{% endif %}
-{% if user_ == request.user %}
-    <p>E-mail: {{ user_.email }}</p>
-    <p><a href="{% url 'profile_update' %}">Update profile</a></p>
-{% endif %}
+    <h1>{{ user_.username }}</h1>
+    <div class="profile-container">
+    {% if user_.profile and user_.profile.picture %}
+        <img class="user-profile-picture" src="{{ user_.profile.picture.url }}">
+    {% endif %}
+    <div class="user-info-box">
+        {% if user_.first_name or user_.last_name %}
+            <p>{{ user_.first_name }} {{ user_.last_name }}</p>
+        {% endif %}
+        {% if user_ == request.user %}
+            <p>E-mail: {{ user_.email }}</p>
+            <p><a href="{% url 'profile_update' %}">Update profile</a></p>
+        {% endif %}
+    </div>
+    </div>
 {% endblock content %}
