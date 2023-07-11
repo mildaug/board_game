@@ -235,8 +235,8 @@ h3 {
 
 .p-container {
   flex: 1 1 500px;
+  width: 500px;
   height: 500px;
-  max-width: calc(50% - 20px);
   margin: 10px;
   box-sizing: border-box;
   background-color: #352f44;
@@ -251,8 +251,8 @@ h3 {
 
 .rating-container {
   flex: 1 1 500px;
-  height: 500px;
-  max-width: calc(50% - 20px);
+  width: 500px;
+  height: 1190px;
   margin: 5px;
   box-sizing: border-box;
   background-color: #352f44;
@@ -266,6 +266,9 @@ h3 {
 }
 
 .video-container {
+  flex: 1 1 100;
+  width: 1190px;
+  height: 500px;
   margin-top: 20px;
   text-align: center;
   background-color: #352f44;
@@ -276,6 +279,7 @@ h3 {
   font-family: Arial, sans-serif; 
   font-size: 20px; 
   color: #fff;
+  margin: 10px;
 }
 
 #player {
@@ -378,4 +382,72 @@ textarea {
 
 .alt-send-button:hover {
   transform: translate3d(0px, -29px, 0px);
+}
+
+.index-title {
+  text-align: center;
+  font-family: Arial Black, sans-serif;
+  font-size: 50px;
+  color: #5dacbd;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-family: Arial Black, sans-serif;
+  font-size: 30px;
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.game-info {
+  width: calc(33.33% - 20px);
+  margin: 10px;
+}
+
+.game-photo-index {
+  width: 400px;
+  height: 400px;
+}
+
+.game-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.game-meta-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: #5dacbd;
+  color: #fff;
+  font-family: Arial Black, sans-serif;
+  text-decoration: none;
+  border-radius: 50%; 
+  font-size: 20px;
+  width: 60px; 
+  height: 60px; 
+  margin-bottom: 50px;
 }
