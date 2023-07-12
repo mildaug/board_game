@@ -216,6 +216,14 @@ h4 {
   text-decoration: none;
 }
 
+.paginator a:hover {
+  background-color: #48969d;
+}
+
+.paginator a:active {
+  background-color: #39787f;
+}
+
 .p-container p {
   margin-bottom: 5px;
 }
