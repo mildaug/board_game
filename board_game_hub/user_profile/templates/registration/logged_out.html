@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Bye!{% endblock title %}
 {% block content %}
-<h1>Thank you for visiting us! </h1>
-<p><a href="{% url 'login' %}">Log in</a> again.</p>
+<div class="container-out">
+    <h1>Thank you for visiting Board Game Hub!</h1>
+    <p>Get ready for thrilling quests, mind-boggling puzzles, and epic battles. But remember, the adventure never truly ends! Login soon to embark on new gaming journeys.</p>
+    <p><a href="{% url 'login' %}" class="login-link">Login</a> to continue the fun and unlock more exciting experiences!</p>
+</div>
 {% endblock content %}
