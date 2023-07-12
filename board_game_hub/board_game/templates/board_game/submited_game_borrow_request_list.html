@@ -2,27 +2,27 @@
 {% load static %}
 
 {% block content %}
-    <h1>Game Borrow Requests</h1>
-    <ul>
-      {% for borrow_request in borrow_requests %} 
-        {% if borrow_request.borrower == request.user %}
-          <li>
-            <strong>Game:</strong> {{ borrow_request.game }}
-            <br>
-            <strong>Borrower:</strong> {{ borrow_request.borrower }}
-            <br>
-            <strong>Owner:</strong> {{ borrow_request.owner }}
-            <br>
-            <strong>Due Back:</strong> {{ borrow_request.due_back }}
-            <br>
-            <strong>Message:</strong> {{ borrow_request.message }}
-            <br>
-            <strong>Status:</strong> {{ borrow_request.request_status }}
-            <br>
-          </li>
-        {% endif %}
-      {% empty %}
-        <li>No game borrow requests yet.</li>
-      {% endfor %}
-    </ul>
+      <h1>Submited Game Borrow Requests</h1>
+      <div class="container">
+          <ul class="list">
+              {% for borrow_request in borrow_requests %} 
+                  {% if borrow_request.borrower == request.user %}
+                      <li class="list-item">
+							<strong>Game:</strong> {{ borrow_request.game }}
+							<br>
+							<strong>Borrower:</strong> {{ borrow_request.borrower }}
+							<br>
+							<strong>Owner:</strong> {{ borrow_request.owner }}
+							<br>
+							<strong>Message:</strong> {{ borrow_request.message }}
+							<br>
+							<strong>Status:</strong> {{ borrow_request.request_status }}
+							<br>
+                      </li>
+                  {% endif %}
+              {% empty %}
+                  <li class="list-item">No game borrow requests yet.</li>
+              {% endfor %}
+          </ul>
+      </div>
 {% endblock %}

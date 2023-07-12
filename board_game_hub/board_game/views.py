@@ -101,8 +101,8 @@ def submited_game_borrow_list(request):
 def received_game_borrow_list(request):
     new_requests_count = GameBorrowRequest.objects.filter(request_status='New', owner=request.user).count()
     new_requests = GameBorrowRequest.objects.filter(request_status='New', owner=request.user)
-    accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')[:3]
-    rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')[:3]
+    accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')
+    rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')
     context = {
         'new_requests_count': new_requests_count,
         'new_requests': new_requests,
@@ -164,7 +164,7 @@ def mark_returned(request, game_id):
 class UserGameListView(LoginRequiredMixin, ListView):
     template_name = 'board_game/user_game_list.html'
     context_object_name = 'game_list'
-    paginate_by = 15
+    paginate_by = 6
 
     def get_queryset(self):
         return Game.objects.filter(owner=self.request.user)
