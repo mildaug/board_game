@@ -55,34 +55,16 @@ class GameRatingForm(forms.Form):
 class GameForm(forms.ModelForm):
     publisher = forms.ModelChoiceField(queryset=Publisher.objects.all(), required=False)
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required=False)
-    
-    new_publisher = forms.CharField(max_length=100, required=False)
-    new_category = forms.CharField(max_length=100, required=False)
 
     class Meta:
         model = Game
-        fields = ['title', 'publisher', 'new_publisher', 'year', 'category', 'new_category', 'image', 'player_count', 'duration', 'player_age', 'language', 'difficulty', 'video_url']
+        fields = ['title', 'publisher', 'year', 'category', 'image', 'player_count', 'duration', 'player_age', 'language', 'difficulty', 'video_url']
+        labels = {
+            'player_count': 'Player count',
+            'player_age': 'Player age', 
+            'video_url': 'Link to video',
+        }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        publisher = cleaned_data.get('publisher')
-        new_publisher = cleaned_data.get('new_publisher')
-        category = cleaned_data.get('category')
-        new_category = cleaned_data.get('new_category')
-
-        if not publisher and not new_publisher:
-            raise forms.ValidationError('You must either select a publisher or enter a new one.')
-
-        if not publisher and new_publisher:
-            publisher, _ = Publisher.objects.get_or_create(name=new_publisher)
-            cleaned_data['publisher'] = publisher
-
-        if not category and new_category:
-            category, _ = Category.objects.get_or_create(name=new_category)
-            cleaned_data['category'] = [category]
-
-        return cleaned_data
-        
 
 class DiscussionForm(forms.ModelForm):
     class Meta:
@@ -93,6 +75,7 @@ class DiscussionForm(forms.ModelForm):
             'content': 'Discussion Content',
         }
 
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -100,4 +83,3 @@ class CommentForm(forms.ModelForm):
         labels = {
             'content': 'Comment',
         }
-        

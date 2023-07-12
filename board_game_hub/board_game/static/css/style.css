@@ -844,7 +844,7 @@ textarea {
   background-color: #352f44;
   padding: 20px;
   margin: 0 auto;
-  margin-top: 20vh;
+  margin-top: 5vh;
   max-width: 400px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -859,25 +859,13 @@ textarea {
 .game-update p {
   font-size: 16px;
   color: #fff;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
 }
 
 .game-update label {
   color: #fff;
   font-weight: bold;
-}
-
-.game-update input[type="text"],
-.game-update input[type="password"] {
-  padding: 6px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-}
-
-.game-update input[type="text"]:focus,
-.game-update input[type="password"]:focus {
-  outline: none;
-  box-shadow: 0 0 4px #5dacbd;
 }
 
 .game-update small {
@@ -958,5 +946,63 @@ textarea {
 }
 
 .game-delete a:hover {
+  color: #48969d;
+}
+
+.game-create {
+  background-color: #352f44;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 5vh;
+  max-width: 400px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-create h1 {
+  font-size: 24px;
+  color: #5dacbd;
+  margin-top: 1px;
+}
+
+.game-create p {
+  font-size: 16px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.game-create label {
+  color: #fff;
+  font-weight: bold;
+}
+
+.game-create small {
+  color: #fff;
+  font-size: 12px;
+}
+
+.game-create button[type="submit"] {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #48969d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.game-create button[type="submit"]:hover {
+  background-color: #39787f;
+}
+
+.game-create a {
+  font-size: 16px;
+  color: #5dacbd;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.game-create a:hover {
   color: #48969d;
 }
