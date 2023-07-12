@@ -530,7 +530,7 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 30px;
+  padding: 5px 80px;
   background-color: #5dacbd;
   color: #fff;
   font-family: Arial Black, sans-serif;
@@ -542,6 +542,7 @@ textarea {
   margin: 0 auto; 
   margin-bottom: 30px;
   text-align: center;
+  margin-right: 135px;
 }
 
 .add-game-link:hover {
@@ -719,6 +720,56 @@ textarea {
 }
 
 .container-in button:hover {
+  background-color: #39787f;
+}
+
+.profile-update {
+  background-color: #352f44;
+  padding: 60px;
+  margin: 0 auto;
+  margin-top: 15vh;
+  max-width: 400px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-update h1 {
+  font-size: 24px;
+  color: #5dacbd;
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
+.profile-update p {
+  font-size: 16px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+}
+
+.profile-update a {
+  font-size: 16px;
+  color: #5dacbd;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.profile-update a:hover {
+  color: #48969d;
+}
+
+.profile-update button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #48969d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.profile-update button:hover {
   background-color: #39787f;
 }
 
