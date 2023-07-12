@@ -4,11 +4,13 @@
 {% block title %}Delete Game{% endblock %}
 
 {% block content %}
-<h1>Delete Game</h1>
-<p>Are you sure you want to delete the game "{{ game }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Delete</button>
-    <a href="{% url 'game_list' %}">Cancel</a>
-    </form>
+    <div class="game-delete">
+        <h1>Delete Game</h1>
+        <p>Are you sure you want to delete the game "{{ game }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+            <a href="{% url 'game_list' %}">Cancel</a>
+        </form>
+    </div>
 {% endblock %}

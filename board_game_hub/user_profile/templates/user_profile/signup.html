@@ -1,36 +1,40 @@
 {% extends 'base.html' %}
-{% block title %} Sign up for {{ block.super }}{% endblock title %}
+
+{% block title %}Sign up for {{ block.super }}{% endblock title %}
+
 {% block content %}
-<h1>Sign up for Board Game Hub</h1>
-<form action="{{ request.path }}" method="post">
-    {% csrf_token %}
-    <p>
-        <label for="first_name">First name</label>
-        <input type="text" name="first_name" value="{{ request.POST.first_name }}">
-    </p>
-    <p>
-        <label for="last_name">Last name</label>
-        <input type="text" name="last_name" value="{{ request.POST.last_name }}">
-    </p>
-    <p>
-        <label for="username">Username</label>
-        <input type="text" name="username" required value="{{ request.POST.username }}">
-        <br><small>Case sensitive, must be unique.</small>
-    </p>
-    <p>
-        <label for="email">E-mail</label>
-        <input type="text" name="email" required value="{{ request.POST.email }}">
-    </p>
-    <p>
-        <label for="password">Password</label>
-        <input type="password" name="password" required>
-    </p>
-    <p>
-        <label for="password_confirm">Confirm password</label>
-        <input type="password" name="password_confirm" required>
-    </p>
-    <p><button type="submit">Confirm sign up</button></p>
-    
-    <p>If you have already an account, you can <a href="{% url 'login' %}">Login</a> instead.</p>
-</form>
+    <div class="signup-form">
+        <h1>Sign up for Board Game Hub</h1>
+        <form action="{{ request.path }}" method="post">
+            {% csrf_token %}
+            <p>
+                <label for="first_name">First name</label>
+                <input type="text" name="first_name" value="{{ request.POST.first_name }}">
+            </p>
+            <p>
+                <label for="last_name">Last name</label>
+                <input type="text" name="last_name" value="{{ request.POST.last_name }}">
+            </p>
+            <p>
+                <label for="username">Username</label>
+                <input type="text" name="username" required value="{{ request.POST.username }}">
+                <br><small>Case sensitive, must be unique.</small>
+            </p>
+            <p>
+                <label for="email">E-mail</label>
+                <input type="text" name="email" required value="{{ request.POST.email }}">
+            </p>
+            <p>
+                <label for="password">Password</label>
+                <input type="password" name="password" required>
+            </p>
+            <p>
+                <label for="password_confirm">Confirm password</label>
+                <input type="password" name="password_confirm" required>
+            </p>
+            <p><button type="submit">Confirm sign up</button></p>
+
+            <p>If you already have an account, you can <a href="{% url 'login' %}">Login</a> instead.</p>
+        </form>
+    </div>
 {% endblock content %}
