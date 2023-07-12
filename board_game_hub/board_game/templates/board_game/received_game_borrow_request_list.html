@@ -9,13 +9,11 @@
         <ul class="list">
             {% for borrow_request in new_requests %}
                 <li class="list-item">
-                    <strong>Status:</strong> {{ borrow_request.request_status }}
-                    <br>
                     <strong>Game:</strong> {{ borrow_request.game }}
                     <br>
                     <strong>Borrower:</strong> {{ borrow_request.borrower }}
                     <br>
-                    <strong>Message:</strong> {{ borrow_request.message }}
+                    <strong>Contact details:</strong> {{ borrow_request.message }}
                     <br>
                     <div class="button-container">
                         <form action="{% url 'accept_borrow_request' borrow_request.pk %}" method="POST">
@@ -36,13 +34,11 @@
         <ul class="list">
             {% for borrow_request in accepted_requests %}
                 <li class="list-item">
-                    <strong>Status:</strong> {{ borrow_request.request_status }}
-                    <br>
                     <strong>Game:</strong> {{ borrow_request.game }}
                     <br>
                     <strong>Borrower:</strong> {{ borrow_request.borrower }}
                     <br>
-                    <strong>Message:</strong> {{ borrow_request.message }}
+                    <strong>Contact details:</strong> {{ borrow_request.message }}
                     <br>
                 </li>
             {% empty %}
@@ -56,13 +52,11 @@
         <ul class="list">
             {% for borrow_request in rejected_requests %}
                 <li class="list-item">
-                    <strong>Status:</strong> {{ borrow_request.request_status }}
-                    <br>
                     <strong>Game:</strong> {{ borrow_request.game }}
                     <br>
                     <strong>Borrower:</strong> {{ borrow_request.borrower }}
                     <br>
-                    <strong>Message:</strong> {{ borrow_request.message }}
+                    <strong>Contact details:</strong> {{ borrow_request.message }}
                     <br>
                 </li>
             {% empty %}

@@ -463,23 +463,23 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
 
 .game-meta-item {
   display: flex;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #5dacbd;
+  font-family: Arial Black, sans-serif;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  background-color: #5dacbd;
-  color: #fff;
-  font-family: Arial Black, sans-serif;
-  text-decoration: none;
-  border-radius: 50%; 
-  font-size: 15px;
-  width: 60px; 
-  height: 60px; 
-  margin-bottom: 50px;
+  margin-right: 40px;
 }
 
 .profile-container {
@@ -530,18 +530,17 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 30px;
+  padding: 12px 30px;
   background-color: #5dacbd;
   color: #fff;
   font-family: Arial Black, sans-serif;
   text-decoration: none;
-  border-radius: 50%;
+  border-radius: 4px;
   font-size: 20px;
   width: 60px;
   height: 60px;
   margin: 0 auto; 
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -618,7 +617,7 @@ textarea {
   margin-top: 10px;
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #48969d;
+  background-color: #5dacbd;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -660,12 +659,20 @@ textarea {
 .container-out a {
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #48969d;
+  background-color: #5dacbd;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.container-out a:hover {
+  background-color: #48969d;
+}
+
+.container-out a:active {
+  background-color: #39787f;
 }
 
 .container-in {
@@ -713,4 +720,31 @@ textarea {
 
 .container-in button:hover {
   background-color: #39787f;
+}
+
+.game-list-borrowed {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.borrowed-item {
+  margin-bottom: 10px;
+}
+
+.borrowed-item a {
+  color: #000;
+  text-decoration: none;
+}
+
+.borrowed-item a:hover {
+  text-decoration: underline;
+}
+
+.return-form {
+  display: inline;
+}
+
+.box {
+  padding: 10px;
 }

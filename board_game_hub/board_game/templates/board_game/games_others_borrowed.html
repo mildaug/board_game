@@ -4,9 +4,9 @@
 {% block content %}
     <h1>Games Others Borrowed</h1>
     {% if borrowed_games %}
-        <ul class="game-list">
+        <ul class="game-list-borrowed">
             {% for game in borrowed_games %}
-                <li class="game-item">
+                <li class="borrowed-item">
                     <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
                     <form action="{% url 'mark_returned' game.pk %}" method="POST" class="return-form">
                         {% csrf_token %}
