@@ -32,7 +32,7 @@ Follow these steps to get started:
 git clone https://github.com/mildaug/board_game_hub
 
 2. Navigate to the project directory:
-cd board-game-hub
+cd board_game_hub
 
 3. Create a virtual environment:
 python3 -m venv venv
