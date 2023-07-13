@@ -181,12 +181,12 @@ class PublisherDetailView(DetailView):
 
 def discussion_list(request):
     discussions = Discussion.objects.all()
-    return render(request, 'discussion/list.html', {'discussions': discussions})
+    return render(request, 'board_game/discussion_list.html', {'discussions': discussions})
 
 def discussion_detail(request, discussion_id):
     discussion = get_object_or_404(Discussion, pk=discussion_id)
     comments = Comment.objects.filter(discussion=discussion)
-    return render(request, 'discussion/detail.html', {'discussion': discussion, 'comments': comments})
+    return render(request, 'board_game/discussion_detail.html', {'discussion': discussion, 'comments': comments})
 
 def create_discussion(request):
     if request.method == 'POST':
@@ -198,7 +198,7 @@ def create_discussion(request):
             return redirect('discussion_list')
     else:
         form = DiscussionForm()
-    return render(request, 'discussion/create.html', {'form': form})
+    return render(request, 'board_game/discussion_create.html', {'form': form})
 
 def create_comment(request, discussion_id):
     discussion = get_object_or_404(Discussion, pk=discussion_id)
@@ -212,4 +212,4 @@ def create_comment(request, discussion_id):
             return redirect('discussion_detail', discussion_id=discussion_id)
     else:
         form = CommentForm()
-    return render(request, 'discussion/create_comment.html', {'form': form, 'discussion': discussion})
+    return render(request, 'board_game/create_comment.html', {'form': form, 'discussion': discussion})
