@@ -29,7 +29,7 @@ To run Board Game Hub on your local machine, please make sure you have the follo
 Follow these steps to get started:
 
 1. Clone the repository from GitHub:
-git clone https://github.com/mildaug/board-game-hub.git
+git clone https://github.com/mildaug/board_game_hub
 
 2. Navigate to the project directory:
 cd board-game-hub
