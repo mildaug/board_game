@@ -94,7 +94,10 @@ def create_borrow_request(request, game_id):
 
 @login_required
 def submited_game_borrow_list(request):
+    status = request.GET.get('status', '')
     borrow_requests = GameBorrowRequest.objects.filter(borrower=request.user)
+    if status:
+        borrow_requests = borrow_requests.filter(request_status=status)
     return render(request, 'board_game/submited_game_borrow_request_list.html', {'borrow_requests': borrow_requests})
 
 @login_required

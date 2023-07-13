@@ -2,25 +2,37 @@
 {% load static %}
 
 {% block content %}
-      <h1>Submited Game Borrow Requests</h1>
-      <div class="container">
-          <ul class="list">
-              {% for borrow_request in borrow_requests %} 
-                  {% if borrow_request.borrower == request.user %}
-                      <li class="list-item">
-							<strong>Game:</strong> {{ borrow_request.game }}
-							<br>
-							<strong>Owner:</strong> {{ borrow_request.owner }}
-							<br>
-							<strong>Contact details:</strong> {{ borrow_request.message }}
-							<br>
-							<strong>Status:</strong> {{ borrow_request.request_status }}
-							<br>
-                      </li>
-                  {% endif %}
-              {% empty %}
-                  <li class="list-item">No game borrow requests yet.</li>
-              {% endfor %}
-          </ul>
-      </div>
+    <h1>Submitted Game Borrow Requests</h1>
+    
+    <form method="get">
+        <div class="filter-container">
+            <label for="status">Filter by status:</label>
+            <select name="status" id="status">
+                <option value="">All</option>
+                <option value="New">New</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <button type="submit">Filter</button>
+        </div>
+    </form>
+    
+    <div class="container">
+        <ul class="list">
+            {% for borrow_request in borrow_requests %} 
+                <li class="list-item">
+                    <strong>Game:</strong> {{ borrow_request.game }}
+                    <br>
+                    <strong>Owner:</strong> {{ borrow_request.owner }}
+                    <br>
+                    <strong>Contact details:</strong> {{ borrow_request.message }}
+                    <br>
+                    <strong>Status:</strong> {{ borrow_request.request_status }}
+                    <br>
+                </li>
+            {% empty %}
+                <li class="list-item">No game borrow requests yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
