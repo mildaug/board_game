@@ -4,17 +4,19 @@
 {% block content %}
     <h1>Games Others Borrowed</h1>
     {% if borrowed_games %}
-        <ul class="game-list-borrowed">
+        <div class="game-container-others-borrowed">
             {% for game in borrowed_games %}
-                <li class="borrowed-item">
+                <div class="game-item-others-borrowed">
                     <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
-                    <form action="{% url 'mark_returned' game.pk %}" method="POST" class="return-form">
-                        {% csrf_token %}
-                        <input type="submit" value="Mark as Returned">
-                    </form>
-                </li>
+                    <div class="return-button-container">
+                        <form action="{% url 'mark_returned' game.pk %}" method="POST" class="return-form">
+                            {% csrf_token %}
+                            <button type="submit" class="return-button">Mark as Returned</button>
+                        </form>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p class="box box-warning">No games are currently borrowed from you.</p>
     {% endif %}

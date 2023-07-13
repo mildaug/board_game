@@ -142,6 +142,7 @@ h4 {
   align-items: center;
   list-style-type: none;
   text-decoration: none;
+  margin: 0 35px 0 0;
 }
 
 .paginator a,
@@ -499,7 +500,7 @@ textarea {
 
 .game-item {
   flex: 0 0 calc(33.33% - 20px);
-  margin-bottom: 150px;
+  margin-bottom: 50px;
 }
 
 .game-picture {
@@ -632,6 +633,12 @@ textarea {
   background-color: #39787f;
 }
 
+.container-in ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .container-in {
   background-color: #352f44;
   padding: 20px;
@@ -640,6 +647,9 @@ textarea {
   max-width: 400px; 
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
 
 .container-in h1 {
@@ -1193,4 +1203,79 @@ textarea {
 
 .filter-container button:hover {
   background-color: #48969d;
+}
+
+.game-container-others-borrowed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.game-item-others-borrowed {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #352f44;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.game-item-others-borrowed a {
+  display: block;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #5dacbd;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+}
+
+.game-item-others-borrowed a:hover {
+  background-color: #48969d;
+}
+
+.return-button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.return-form {
+  display: inline-block;
+  margin-left: 0px;
+}
+
+.return-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #5dacbd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.return-button:hover {
+  background-color: #48969d;
+}
+
+.box {
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.box-warning {
+  background-color: #5dacbd;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.box-error {
+  background-color: #5dacbd;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }

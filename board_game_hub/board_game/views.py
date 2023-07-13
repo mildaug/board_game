@@ -167,7 +167,7 @@ def mark_returned(request, game_id):
 class UserGameListView(LoginRequiredMixin, ListView):
     template_name = 'board_game/user_game_list.html'
     context_object_name = 'game_list'
-    paginate_by = 6
+    paginate_by = 3
 
     def get_queryset(self):
         return Game.objects.filter(owner=self.request.user)
