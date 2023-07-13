@@ -71,8 +71,8 @@ class DiscussionForm(forms.ModelForm):
         model = Discussion
         fields = ['title', 'content']
         labels = {
-            'title': 'Discussion Title',
-            'content': 'Discussion Content',
+            'title': 'Topic',
+            'content': 'Content',
         }
 
 

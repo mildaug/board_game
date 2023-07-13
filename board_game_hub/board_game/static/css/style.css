@@ -1279,3 +1279,76 @@ textarea {
   color: #fff;
   font-family: Arial, sans-serif;
 }
+
+.create-topic-container {
+  background-color: #352f44;
+  padding: 150px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20vh auto;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+  margin-top: 100px;
+}
+
+.create-topic-box {
+  border: 1px solid #ccc;
+  padding: 50px;
+  border-radius: 5px;
+}
+
+.create-topic-heading {
+  font-size: 30px;
+  color: #5dacbd;
+  margin-top: -120px;
+  margin-bottom: 20px;
+}
+
+.create-topic-form {
+  margin-top: 40px;
+  color: #fff;
+  margin-left: -100px;
+  font-size: 20px;
+}
+
+.create-topic-form .form-group {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.create-topic-form .form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.create-topic-form .form-group input[type="text"],
+.create-topic-form .form-group textarea {
+  width: 50px;
+  height: 75px; 
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.create-topic-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #5dacbd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-topic-button:hover {
+  background-color: #48969d;
+}
+
+.create-topic-button:active {
+  background-color: #39787f;
+}

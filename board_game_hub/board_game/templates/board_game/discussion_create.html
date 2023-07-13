@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Create Game{% endblock %}
+{% block title %}Create New Topic{% endblock %}
 
 {% block content %}
-    <h1>Create Topic</h1>
-    <form method="post" action="{% url 'create_discussion' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Discussion</button>
-      </form>
+    <div class="create-topic-container">
+        <h1 class="create-topic-heading">Create New Topic</h1>
+        <form class="create-topic-form" method="post" action="{% url 'create_discussion' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="create-topic-button" type="submit">Create New Topic</button>
+        </form>
+    </div>
 {% endblock %}
