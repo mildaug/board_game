@@ -62,7 +62,7 @@ class GameForm(forms.ModelForm):
         labels = {
             'player_count': 'Player count',
             'player_age': 'Player age', 
-            'video_url': 'Link to video',
+            'video_url': 'Link to trailer',
         }
 
 

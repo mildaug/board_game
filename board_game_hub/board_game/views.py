@@ -72,7 +72,7 @@ def delete_game(request, pk):
     game = get_object_or_404(Game, pk=pk)
     if request.method == 'POST':
         game.delete()
-        return redirect('game_list')
+        return redirect('user_game_list')
     return render(request, 'board_game/delete_game.html', {'game': game})
 
 @login_required

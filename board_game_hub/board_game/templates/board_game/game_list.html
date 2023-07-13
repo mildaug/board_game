@@ -9,7 +9,10 @@
             {% with game_image=game.image.url %}
                 <div class="game">
                     <div class="game-details">
-                        <h3 class="game-title"><a href="{% url 'game_detail' game.pk %}">{{ game.title }}, {{ game.year }}</a></h3>
+                        <h3 class="game-title">
+                            <a href="{% url 'game_detail' game.pk %}">{{ game.title }}, {{ game.year }}</a>
+                            <span class="game-status">{{ game.status }}</span>
+                        </h3>
                         <div class="game-image">
                             {% if game_image %}
                                 <img src="{{ game_image }}" alt="{{ game.title }}">
