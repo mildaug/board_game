@@ -4,12 +4,16 @@
 {% block title %}Topics{% endblock title %}
 
 {% block content %}
-    <h1>Topics</h1>
-            {% for discussion in discussions %}
-            <h2><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h2>
-            <p>Created by: {{ discussion.author.username }}</p>
-            <p>{{ discussion.created_at }}</p>
-          {% endfor %}
+    <div class="topics-container">
+        <h1>Topics</h1>
+        {% for discussion in discussions %}
+            <div class="topic-container">
+                <h2><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h2>
+                <p>Created by: {{ discussion.author.username }}</p>
+                <p>{{ discussion.created_at }}</p>
+            </div>
+        {% endfor %}
           
-          <a href="{% url 'create_discussion' %}">Create New Discussion</a>
+        <a href="{% url 'create_discussion' %}" class="create-discussion-button">Create New Discussion</a>
+    </div>
 {% endblock %}
