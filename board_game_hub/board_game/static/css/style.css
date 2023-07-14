@@ -288,7 +288,7 @@ h4 {
   color: #fff;
   font-family: Arial Black, sans-serif;
   font-size: 40px;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .contact-wrapper {
@@ -300,7 +300,7 @@ h4 {
   position: relative;
   max-width: 600px;
   background-color: #352f44;
-  margin-top: 50px; 
+  margin-top: 50px;
 }
 
 .form-horizontal {
@@ -325,11 +325,14 @@ textarea {
 
 .send-button {
   margin-top: 15px;
-  height: 34px;
-  width: 600px; 
+  width: 600px;
   height: 75px;
   overflow: hidden;
   transition: all .2s ease-in-out;
+  background-color: #5dacbd;
+  font-family: Arial Black, sans-serif;
+  color: white;
+  font-size: 15px;
 }
 
 .alt-send-button {
@@ -343,10 +346,6 @@ textarea {
   margin-top: 10px;
   font: 700 12px Arial Black, sans-serif;
   letter-spacing: 2px;
-}
-
-.alt-send-button:hover {
-  transform: translate3d(0px, -29px, 0px);
 }
 
 .index-title {

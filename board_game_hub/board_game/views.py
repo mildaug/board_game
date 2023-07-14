@@ -146,7 +146,7 @@ def received_game_borrow_list(request):
     new_requests = GameBorrowRequest.objects.filter(request_status='New', owner=request.user)
     accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')
     rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')
-    return render(request, 'board_game/received_game_borrow_request_list.html', {'new_requests_count': new_requests_count}, {'new_requests': new_requests}, {'accepted_requests': accepted_requests}, {'rejected_requests': rejected_requests}, {'game_owner': request.user})
+    return render(request, 'board_game/received_game_borrow_request_list.html', {'new_requests_count': new_requests_count, 'new_requests': new_requests, 'accepted_requests': accepted_requests, 'rejected_requests': rejected_requests, 'game_owner': request.user})
 
 @login_required
 def accept_borrow_request(request, pk):
