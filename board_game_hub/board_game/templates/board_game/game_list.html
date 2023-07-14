@@ -4,6 +4,14 @@
 {% block content %}
     <h1>All Games</h1>
     {% include 'includes/paginator_pages.html' %}
+
+    <div class="search-bar">
+        <form method="GET" action="{% url 'game_search' %}">
+            <input type="text" name="query" placeholder="Search games">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    
     <div class="game-list">
         {% for game in game_list %}
             {% with game_image=game.image.url %}

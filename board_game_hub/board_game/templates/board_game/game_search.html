@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Game Search Results</h1>
+    {% if game_list %}
+        <div class="game-list">
+            {% for game in game_list %}
+                <div class="game">
+                    <div class="game-details">
+                        <h3 class="game-title">
+                            <a href="{% url 'game_detail' game.pk %}">{{ game.title }}, {{ game.year }}</a>
+                            <span class="game-status">{{ game.status }}</span>
+                        </h3>
+                        <div class="game-image">
+                            {% with game_image=game.image.url %}
+                                {% if game_image %}
+                                    <img src="{{ game_image }}" alt="{{ game.title }}">
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No games found.</p>
+    {% endif %}
+{% endblock %}

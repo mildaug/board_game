@@ -8,6 +8,14 @@
     
     <a href="{% url 'create_game' %}" class="add-game-link">Add game</a>
 
+    <div class="search-bar">
+        <form method="GET" action="{% url 'game_search' %}">
+            <input type="text" name="query" placeholder="Search games">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    
+
     {% if game_list %}
         <div class="game-list">
         {% for game in game_list %}

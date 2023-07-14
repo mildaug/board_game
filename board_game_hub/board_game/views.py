@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from .models import Game, Publisher, GameBorrowRequest, GameRating, Discussion, Comment
 from .forms import GameForm, GameRatingForm, BorrowRequestCreateForm, DiscussionForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Avg
+from django.db.models import Avg, Q
 
 
 def index(request):
@@ -19,6 +19,19 @@ def game_list(request):
     page_number = request.GET.get('page')
     game_list = paginator.get_page(page_number)
     return render(request, 'board_game/game_list.html', {'game_list': game_list, 'page_obj': game_list})
+
+def game_search(request):
+    query = request.GET.get('query')
+    if query:
+        games = Game.objects.filter(
+            Q(title__icontains=query) |
+            Q(category__name__icontains=query) |
+            Q(year__icontains=query) |
+            Q(publisher__name__icontains=query)
+        ).distinct()
+    else:
+        games = Game.objects.all()
+    return render(request, 'board_game/game_search.html', {'game_list': games})
 
 @login_required
 def game_detail(request, pk):
