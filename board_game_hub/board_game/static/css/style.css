@@ -1536,3 +1536,59 @@ textarea {
 .search-bar button[type="submit"]:hover {
   background-color: #39787f;
 }
+
+.filters {
+  background-color: #352f44;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.filters h2 {
+  font-size: 20px;
+  color: #5dacbd;
+  margin-top: 0px;
+}
+
+.filters form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filters label {
+  margin-right: 10px;
+}
+
+.filters select,
+.filters button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #5dacbd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.filters button {
+  background-color: #48969d;
+}
+
+.filters select:focus,
+.filters button:focus {
+  outline: none;
+}
+
+.filters option {
+  background-color: #352f44;
+  color: #fff;
+}
+
+.filters option:hover {
+  background-color: #48969d;
+}

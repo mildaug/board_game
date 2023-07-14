@@ -18,7 +18,12 @@ def game_list(request):
     paginator = Paginator(game_list, 6)
     page_number = request.GET.get('page')
     game_list = paginator.get_page(page_number)
-    return render(request, 'board_game/game_list.html', {'game_list': game_list, 'page_obj': game_list})
+
+    filter_options = Game.objects.values_list('category__name', 'difficulty', 'player_count').distinct()
+    category_options = list(set(option[0] for option in filter_options))
+    difficulty_options = list(set(option[1] for option in filter_options))
+    player_count_options = list(set(option[2] for option in filter_options))
+    return render(request, 'board_game/game_list.html', {'game_list': game_list, 'page_obj': game_list, 'category_options': category_options, 'difficulty_options': difficulty_options,'player_count_options': player_count_options})
 
 def game_search(request):
     query = request.GET.get('query')
@@ -32,6 +37,28 @@ def game_search(request):
     else:
         games = Game.objects.all()
     return render(request, 'board_game/game_search.html', {'game_list': games})
+
+def filtered_games(request):
+    filters = {}
+    category = request.GET.get('category')
+    difficulty = request.GET.get('difficulty')
+    player_count = request.GET.get('player_count')
+
+    if category:
+        filters['category__name'] = category
+    if difficulty:
+        filters['difficulty'] = difficulty
+    if player_count:
+        filters['player_count'] = player_count
+
+    games = Game.objects.filter(**filters)
+
+    filter_options = Game.objects.values_list('category__name', 'difficulty', 'player_count').distinct()
+
+    category_options = list(set(option[0] for option in filter_options))
+    difficulty_options = list(set(option[1] for option in filter_options))
+    player_count_options = list(set(option[2] for option in filter_options))
+    return render(request, 'board_game/game_filter.html', {'game_list': games, 'category_options': category_options, 'difficulty_options': difficulty_options, 'player_count_options': player_count_options})
 
 @login_required
 def game_detail(request, pk):
@@ -119,14 +146,7 @@ def received_game_borrow_list(request):
     new_requests = GameBorrowRequest.objects.filter(request_status='New', owner=request.user)
     accepted_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Accepted').order_by('-pk')
     rejected_requests = GameBorrowRequest.objects.filter(owner=request.user, request_status='Rejected').order_by('-pk')
-    context = {
-        'new_requests_count': new_requests_count,
-        'new_requests': new_requests,
-        'accepted_requests': accepted_requests,
-        'rejected_requests': rejected_requests,
-        'game_owner': request.user
-    }
-    return render(request, 'board_game/received_game_borrow_request_list.html', context)
+    return render(request, 'board_game/received_game_borrow_request_list.html', {'new_requests_count': new_requests_count}, {'new_requests': new_requests}, {'accepted_requests': accepted_requests}, {'rejected_requests': rejected_requests}, {'game_owner': request.user})
 
 @login_required
 def accept_borrow_request(request, pk):
@@ -176,6 +196,45 @@ def mark_returned(request, game_id):
     borrowed_games.update(status='Available')
     return redirect('games_others_borrowed')
 
+@login_required
+def discussion_list(request):
+    discussions = Discussion.objects.all()
+    return render(request, 'board_game/discussion_list.html', {'discussions': discussions})
+
+@login_required
+def discussion_detail(request, discussion_id):
+    discussion = get_object_or_404(Discussion, pk=discussion_id)
+    comments = Comment.objects.filter(discussion=discussion)
+    return render(request, 'board_game/discussion_detail.html', {'discussion': discussion, 'comments': comments})
+
+@login_required
+def create_discussion(request):
+    if request.method == 'POST':
+        form = DiscussionForm(request.POST)
+        if form.is_valid():
+            discussion = form.save(commit=False)
+            discussion.author = request.user
+            discussion.save()
+            return redirect('discussion_list')
+    else:
+        form = DiscussionForm()
+    return render(request, 'board_game/discussion_create.html', {'form': form})
+
+@login_required
+def create_comment(request, discussion_id):
+    discussion = get_object_or_404(Discussion, pk=discussion_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.discussion = discussion
+            comment.author = request.user
+            comment.save()
+            return redirect('discussion_detail', discussion_id=discussion_id)
+    else:
+        form = CommentForm()
+    return render(request, 'board_game/create_comment.html', {'form': form, 'discussion': discussion})
+
 
 class UserGameListView(LoginRequiredMixin, ListView):
     template_name = 'board_game/user_game_list.html'
@@ -190,39 +249,3 @@ class PublisherDetailView(DetailView):
     model = Publisher
     template_name = 'board_game/publisher_detail.html'
     context_object_name = 'publisher'
-
-
-def discussion_list(request):
-    discussions = Discussion.objects.all()
-    return render(request, 'board_game/discussion_list.html', {'discussions': discussions})
-
-def discussion_detail(request, discussion_id):
-    discussion = get_object_or_404(Discussion, pk=discussion_id)
-    comments = Comment.objects.filter(discussion=discussion)
-    return render(request, 'board_game/discussion_detail.html', {'discussion': discussion, 'comments': comments})
-
-def create_discussion(request):
-    if request.method == 'POST':
-        form = DiscussionForm(request.POST)
-        if form.is_valid():
-            discussion = form.save(commit=False)
-            discussion.author = request.user
-            discussion.save()
-            return redirect('discussion_list')
-    else:
-        form = DiscussionForm()
-    return render(request, 'board_game/discussion_create.html', {'form': form})
-
-def create_comment(request, discussion_id):
-    discussion = get_object_or_404(Discussion, pk=discussion_id)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.discussion = discussion
-            comment.author = request.user
-            comment.save()
-            return redirect('discussion_detail', discussion_id=discussion_id)
-    else:
-        form = CommentForm()
-    return render(request, 'board_game/create_comment.html', {'form': form, 'discussion': discussion})
