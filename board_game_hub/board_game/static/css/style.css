@@ -1385,3 +1385,121 @@ textarea {
 .create-topic-container button.create-topic-button:hover {
   background-color: #39787f;
 }
+
+.topic-details-container h1 {
+  font-size: 24px;
+  color: #5dacbd;
+  margin-top: 20px;
+}
+
+.topic-details-container p {
+  font-size: 16px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.topic-details-container hr {
+  border: none;
+  border-top: 1px solid white;
+  margin: 20px 0;
+}
+
+.topic-details-container h3 {
+  font-size: 20px;
+  color: #5dacbd;
+  margin-top: 1px;
+}
+
+.topic-details-container div {
+  margin-bottom: 20px;
+}
+
+.topic-details-container a {
+  font-size: 16px;
+  color: #5dacbd;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.topic-details-container a:hover {
+  color: #48969d;
+}
+
+.topic-details-container .add-comment-button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #5dacbd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.topic-details-container .add-comment-button:hover {
+  background-color: #48969d;
+}
+
+.topic-details-container .add-comment-button:active {
+  background-color: #39787f;
+}
+
+.create-comment-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.create-comment-container {
+  background-color: #352f44;
+  padding: 120px;
+  margin: 0 auto;
+  margin-top: 10vh;
+  max-width: 400px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.create-comment-container h2 {
+  font-size: 24px;
+  color: #5dacbd;
+  margin-top: -100px;
+  margin-left: 80px;
+}
+
+.create-comment-container p {
+  font-size: 16px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin-left: -100px;
+}
+
+.create-comment-container a {
+  font-size: 16px;
+  color: #5dacbd;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.create-comment-container a:hover {
+  color: #48969d;
+}
+
+.create-comment-container button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #48969d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: -100px;
+}
+
+.create-comment-container button:hover {
+  background-color: #39787f;
+}

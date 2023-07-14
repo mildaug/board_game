@@ -15,6 +15,8 @@ Welcome to Board Game Hub! This is a web application designed to be your one-sto
 
 - **Search and Filters:** Find games quickly with our powerful search functionality. Apply filters based on categories, difficulty level, player count, and more to discover games that match your preferences.
 
+- **Forum:** Engage with the community and participate in discussions on various topics related to board games. Share your insights, ask questions, and connect with fellow board game enthusiasts.
+
 
 ## Installation
 

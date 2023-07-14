@@ -4,25 +4,26 @@
 {% block title %}Topics{% endblock title %}
 
 {% block content %}
-    <h1>Details</h1>
-    <h2>{{ discussion.title }}</h2>
-    <p>Created by: {{ discussion.author.username }}</p>
-    <p>{{ discussion.created_at }}</p>
-    <p>{{ discussion.content }}</p>
-    
-    <hr>
-    
-    <h3>Comments</h3>
-    {% for comment in comments %}
-      <div>
-        <p>Comment by: {{ comment.author.username }}</p>
-        <p>{{ comment.created_at }}</p>
-        <p>{{ comment.content }}</p>
-      </div>
-      <hr>
-    {% empty %}
-      <p>No comments yet.</p>
-    {% endfor %}
-    
-    <a href="{% url 'create_comment' discussion.id %}">Add a Comment</a>
+      <div class="topic-details-container">
+        	<h1>{{ discussion.title }}</h1>
+        	<p>Created by: {{ discussion.author.username }}</p>
+        	<p>{{ discussion.created_at }}</p>
+        	<p>{{ discussion.content }}</p>
+          
+        	<hr>
+          
+        	<h3>Comments</h3>
+        	{% for comment in comments %}
+            <div>
+				<p>Comment by: {{ comment.author.username }}</p>
+				<p>{{ comment.created_at }}</p>
+				<p>{{ comment.content }}</p>
+            </div>
+            <hr>
+        	{% empty %}
+            	<p>No comments yet.</p>
+        	{% endfor %}
+          
+        	<a href="{% url 'create_comment' discussion.id %}" class="add-comment-button">Add a Comment</a>
+    	</div>
 {% endblock %}

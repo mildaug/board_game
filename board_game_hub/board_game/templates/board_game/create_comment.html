@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Create Game{% endblock %}
+{% block title %}Create Comment{% endblock %}
 
 {% block content %}
-<h2>Add a Comment</h2>
+      <div class="create-comment-container">
+        	<h2 class="create-comment-heading">Add a Comment</h2>
 
-<form method="post" action="{% url 'create_comment' discussion.id %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Post Comment</button>
-</form>
+        	<form class="create-comment-form" method="post" action="{% url 'create_comment' discussion.id %}">
+            	{% csrf_token %}
+            	{{ form.as_p }}
+            	<button class="create-comment-button" type="submit">Post Comment</button>
+        	</form>
+    	</div>
 {% endblock %}
