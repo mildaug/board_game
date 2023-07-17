@@ -77,7 +77,7 @@ h4 {
 h5 {
   text-align: left;
   font-family: Arial Black, sans-serif;
-  color: #5dacbd;
+  color: white;
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 30px;
@@ -294,7 +294,7 @@ h5 {
 
 .video-container {
   width: 825px;
-  height: 500px;
+  height: 640px;
   text-align: center;
   background-color: #352f44;
   display: flex;
@@ -304,6 +304,7 @@ h5 {
   font-family: Arial, sans-serif;
   font-size: 20px;
   color: #fff;
+  margin-bottom: 20px;
 }
 
 #player {
@@ -345,6 +346,11 @@ h5 {
 .borrow-button:active {
   background-color: #39787f;
 } 
+
+.inactive-button {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .section-header {
   text-align: center;

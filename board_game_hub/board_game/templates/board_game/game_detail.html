@@ -4,13 +4,17 @@
 {% block title %} About game {% endblock title %}
 
 {% block content %}
-    <div class="container" style="background-color: #2a2438;">
-        <h1>{{ game.title }}</h1>
-        <div class="borrow-button-container">
-            <p class="borrow-button-text"></p>
+<div class="container" style="background-color: #2a2438;">
+    <h1>{{ game.title }}</h1>
+    <div class="borrow-button-container">
+        <p class="borrow-button-text"></p>
+        {% if game.status == "Borrowed" %}
+            <button class="borrow-button inactive-button" disabled>Borrowed</button>
+        {% else %}
             <a href="{% url 'game_borrow_request' game.id %}" class="borrow-button">Borrow</a>
-        </div>
-        <div class="container-row">
+        {% endif %}
+    </div>
+    <div class="container-row">
             <div class="image-container">
                 <div class="game-detail-photo">
                     {% if game.image %}
@@ -80,7 +84,7 @@
                         var videoId = getYouTubeVideoId('{{ game.video_url }}');
                         if (videoId) {
                             new YT.Player('player', {
-                                height: '360',
+                                height: '500',
                                 width: '640',
                                 videoId: videoId
                             });
