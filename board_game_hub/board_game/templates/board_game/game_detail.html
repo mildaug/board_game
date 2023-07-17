@@ -4,86 +4,91 @@
 {% block title %} About game {% endblock title %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="background-color: #2a2438;">
         <h1>{{ game.title }}</h1>
         <div class="borrow-button-container">
             <p class="borrow-button-text"></p>
             <a href="{% url 'game_borrow_request' game.id %}" class="borrow-button">Borrow</a>
         </div>
         <div class="container-row">
-            <div class="game-photo">
-                {% if game.image %}
-                    <img src="{{ game.image.url }}" alt="Game photo">
-                {% else %}
-                    <span>No image available</span>
-                {% endif %}
+            <div class="image-container">
+                <div class="game-detail-photo">
+                    {% if game.image %}
+                        <img src="{{ game.image.url }}" alt="Game photo">
+                    {% else %}
+                        <span>No image available</span>
+                    {% endif %}
+                </div>
             </div>
-            <div class="p-container">
-                <p><strong>Publisher:</strong> {{ game.publisher }}</p>
-                <p><strong>Year:</strong> {{ game.year }}</p>
-                <p><strong>Category(-ies):</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <p><strong>Difficulty:</strong> {{ game.difficulty }}</p>
-                <p><strong>Player count:</strong> {{ game.player_count }}</p>
-                <p><strong>Duration:</strong> {{ game.duration }}</p>
-                <p><strong>Player age:</strong> {{ game.player_age }}</p>
-                <p><strong>Language:</strong> {{ game.language }}</p>
-                <p><strong>Owner:</strong> {{ game.owner }}</p>
-            </div>
-            <div class="rating-container">
-                <h2>Average rating: {{ game.rating }}/5.0</h2>
+            <div class="details-container">
+                <div class="p-container">
+                    <p><strong>Publisher:</strong> {{ game.publisher }}</p>
+                    <p><strong>Year:</strong> {{ game.year }}</p>
+                    <p><strong>Category(-ies):</strong> {% for game_category in game.category.all %}{{ game_category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                    <p><strong>Difficulty:</strong> {{ game.difficulty }}</p>
+                    <p><strong>Player count:</strong> {{ game.player_count }}</p>
+                    <p><strong>Duration:</strong> {{ game.duration }}</p>
+                    <p><strong>Player age:</strong> {{ game.player_age }}</p>
+                    <p><strong>Language:</strong> {{ game.language }}</p>
+                    <p><strong>Owner:</strong> {{ game.owner }}</p>
+                </div>
+                <div class="rating-container">
+                    <h5>Average rating: {{ game.rating }}/5</h5>
 
-                <h2>User ratings and comments:</h2>
-                <ul>
-                    {% for rating in ratings %}
-                    <li>
-                        <strong>User:</strong> {{ rating.user }}
-                        <br>
-                        <strong>Rating:</strong> {{ rating.rating }}
-                        <br>
-                        <strong>Comment:</strong> {{ rating.comment }}
-                    </li>
-                    {% empty %}
-                    <li>No ratings or comments available.</li>
-                    {% endfor %}
-                </ul>
+                    <h2>User ratings and comments:</h2>
+                    <ul>
+                        {% for rating in ratings %}
+                        <li>
+                            <strong>User:</strong> {{ rating.user }}
+                            <br>
+                            <strong>Rating:</strong> {{ rating.rating }}
+                            <br>
+                            <strong>Comment:</strong> {{ rating.comment }}
+                        </li>
+                        {% empty %}
+                        <li>No ratings or comments yet.</li>
+                        {% endfor %}
+                    </ul>
 
-                {% if not user_rated %}
-                <h3>Submit your rating and comment:</h3>
-                <form method="POST" action="{% url 'game_detail' game.pk %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Submit</button>
-                </form>
-                {% else %}
-                <p>You have already rated and left a review for this game.</p>
-                {% endif %}
+                    {% if not user_rated %}
+                    <h5>Submit your rating and comment</h5>
+                    <form method="POST" action="{% url 'game_detail' game.pk %}">
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      <button type="submit" class="submit-button">Submit</button>
+                    </form>
+                    {% else %}
+                    <p>You have already rated and left a review for this game.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        <div class="container-row">
+            <div class="video-container">
+                {% if game.video_url %}
+                <h2>Game trailer</h2>
+                <div id="player"></div>
 
-        <div class="video-container">
-            {% if game.video_url %}
-            <h2>Game trailer</h2>
-            <div id="player"></div>
-
-            <script src="https://www.youtube.com/player_api"></script>
-            <script>
-                function getYouTubeVideoId(url) {
-                    var match = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_\-]+)/);
-                    return match ? match[1] : null;
-                }
-
-                function onYouTubePlayerAPIReady() {
-                    var videoId = getYouTubeVideoId('{{ game.video_url }}');
-                    if (videoId) {
-                        new YT.Player('player', {
-                            height: '360',
-                            width: '640',
-                            videoId: videoId
-                        });
+                <script src="https://www.youtube.com/player_api"></script>
+                <script>
+                    function getYouTubeVideoId(url) {
+                        var match = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_\-]+)/);
+                        return match ? match[1] : null;
                     }
-                }
-            </script>
-            {% endif %}
+
+                    function onYouTubePlayerAPIReady() {
+                        var videoId = getYouTubeVideoId('{{ game.video_url }}');
+                        if (videoId) {
+                            new YT.Player('player', {
+                                height: '360',
+                                width: '640',
+                                videoId: videoId
+                            });
+                        }
+                    }
+                </script>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
