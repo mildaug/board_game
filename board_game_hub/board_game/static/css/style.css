@@ -1349,6 +1349,37 @@ textarea {
   font-family: Arial, sans-serif;
 }
 
+.game-list-i-borrow {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-item-i-borrow {
+  width: 99%;
+  height: 50px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #352f44;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.game-item-i-borrow a {
+  display: block;
+  margin-bottom: 5px;
+  padding: 15px;
+  background-color: #5dacbd;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+}
+
+.game-item-i-borrow a:hover {
+  background-color: #48969d;
+}
+
 .topic-container {
   background-color: #352f44;
   padding: 10px;

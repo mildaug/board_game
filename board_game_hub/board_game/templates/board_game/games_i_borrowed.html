@@ -4,9 +4,9 @@
 {% block content %}
     <h1>Games I Borrowed</h1>
     {% if borrowed_games %}
-        <ul class="game-list">
+        <ul class="game-list-i-borrow">
             {% for game in borrowed_games %}
-                <li class="game-item">
+                <li class="game-item-i-borrow">
                     <a href="{% url 'game_detail' game.pk %}">{{ game }}</a>
                 </li>
             {% endfor %}
