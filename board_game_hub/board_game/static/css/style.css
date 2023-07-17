@@ -187,7 +187,7 @@ h5 {
 .container-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 50px;
   background-color: #2a2438;
   height: 600px;
 }
