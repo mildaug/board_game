@@ -12,6 +12,11 @@
       <li>
         <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ page_obj.number|add:"1" }}" class="arrow">&#8594;</a>
       </li>
+      {% if page_obj.number > 1 %}
+      <li>
+        <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ page_obj.number|add:"-1" }}" class="arrow">&#8592;</a>
+      </li>
+      {% endif %}
     {% elif number == page_obj.paginator.num_pages %}
       <li>
         <a href="?{% if request.GET.query %}query={{ request.GET.query }}&{% endif %}page={{ number }}" class="bubble double-arrow">&#8649;</a>
